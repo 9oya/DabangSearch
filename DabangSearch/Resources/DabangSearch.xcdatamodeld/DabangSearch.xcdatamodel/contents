@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+    <entity name="Average" representedClassName="Average" syncable="YES">
+        <attribute name="monthPrice" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="yearPrice" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="HashTag" representedClassName="HashTag" syncable="YES">
+        <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="hashTags" inverseEntity="Room"/>
+    </entity>
+    <entity name="Room" representedClassName="Room" syncable="YES">
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="imgUrl" optional="YES" attributeType="String"/>
+        <attribute name="isCheck" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="priceTitle" optional="YES" attributeType="String"/>
+        <attribute name="roomType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sellingType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="hashTags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HashTag" inverseName="room" inverseEntity="HashTag"/>
+    </entity>
+    <elements>
+        <element name="Average" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="HashTag" positionX="-54" positionY="-9" width="128" height="88"/>
+        <element name="Room" positionX="-36" positionY="9" width="128" height="148"/>
+    </elements>
 </model>

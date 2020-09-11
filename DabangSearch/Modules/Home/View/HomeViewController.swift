@@ -59,7 +59,6 @@ extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
 }
 
 extension HomeViewController {
-    // MARK: Private
     private func setupLayout() {
         // MARK: Setup super-view
         view.backgroundColor = .systemBackground

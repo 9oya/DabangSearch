@@ -1,5 +1,5 @@
 //
-//  RoomService.swift
+//  HashTagService.swift
 //  DabangSearch
 //
 //  Created by Eido Goya on 2020/09/11.
@@ -8,8 +8,8 @@
 
 import CoreData
 
-class RoomService: RoomServiceProtocol {
-    static let shared = RoomService(coreDataStack: CoreDataStack())
+class HashTagService: HashTagServiceProtocol {
+    static let shared = HashTagService(coreDataStack: CoreDataStack())
     var managedObjContext: NSManagedObjectContext
     var coreDataStack: CoreDataStack
     
@@ -19,17 +19,17 @@ class RoomService: RoomServiceProtocol {
     }
     
     // MARK: CREATE Services
-    func createRoom(desc: String, isCheck: Bool, priceTitle: String, roomType: Int16, sellingType: Int16, imgUrl: String) -> Room {
-        let room = Room(context: managedObjContext)
-        room.desc = desc
-        room.isCheck = isCheck
-        room.priceTitle = priceTitle
-        room.roomType = roomType
-        room.sellingType = sellingType
-        room.imgUrl = imgUrl
+    func createHashTag(room: Room, title: String, priority: Int16) -> HashTag {
+        let hashTag = HashTag(context: managedObjContext)
+        hashTag.title = title
+        hashTag.priority = priority
+        hashTag.room = room
+        
+        room.addToHashTags(hashTag)
+        
         managedObjContext.perform {
             self.coreDataStack.saveContext(self.managedObjContext)
         }
-        return room
+        return hashTag
     }
 }

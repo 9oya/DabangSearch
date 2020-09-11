@@ -25,6 +25,24 @@
 		F56382D1250B6214002C6F23 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56382D0250B6214002C6F23 /* SceneDelegate.swift */; };
 		F56382D8250B6215002C6F23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F56382D7250B6215002C6F23 /* Assets.xcassets */; };
 		F56382DB250B6215002C6F23 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F56382D9250B6215002C6F23 /* LaunchScreen.storyboard */; };
+		F5C9FAB0250B64520084615B /* FilterCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAAF250B64520084615B /* FilterCollectionCell.swift */; };
+		F5C9FAB2250B645D0084615B /* TagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAB1250B645D0084615B /* TagCollectionCell.swift */; };
+		F5C9FABA250B65210084615B /* HashTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAB4250B65210084615B /* HashTag+CoreDataClass.swift */; };
+		F5C9FABB250B65210084615B /* HashTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAB5250B65210084615B /* HashTag+CoreDataProperties.swift */; };
+		F5C9FABC250B65210084615B /* Room+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAB6250B65210084615B /* Room+CoreDataClass.swift */; };
+		F5C9FABD250B65210084615B /* Room+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAB7250B65210084615B /* Room+CoreDataProperties.swift */; };
+		F5C9FABE250B65210084615B /* Average+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAB8250B65210084615B /* Average+CoreDataClass.swift */; };
+		F5C9FABF250B65210084615B /* Average+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAB9250B65210084615B /* Average+CoreDataProperties.swift */; };
+		F5C9FAC1250B653F0084615B /* HashTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAC0250B653F0084615B /* HashTagService.swift */; };
+		F5C9FAC3250B65480084615B /* AverageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAC2250B65480084615B /* AverageService.swift */; };
+		F5C9FAC5250B65540084615B /* AverageServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAC4250B65540084615B /* AverageServiceProtocol.swift */; };
+		F5C9FAC7250B655E0084615B /* HashTagServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAC6250B655E0084615B /* HashTagServiceProtocol.swift */; };
+		F5C9FAC9250B65660084615B /* RoomServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAC8250B65660084615B /* RoomServiceProtocol.swift */; };
+		F5C9FACC250B65A10084615B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FACB250B65A10084615B /* CoreDataStack.swift */; };
+		F5C9FACE250B670A0084615B /* RoomListData.txt in Resources */ = {isa = PBXBuildFile; fileRef = F5C9FACD250B670A0084615B /* RoomListData.txt */; };
+		F5C9FAD0250B674F0084615B /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FACF250B674F0084615B /* FileService.swift */; };
+		F5C9FAD2250B675D0084615B /* FileServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAD1250B675D0084615B /* FileServiceProtocol.swift */; };
+		F5C9FAD5250B68D70084615B /* RoomModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAD4250B68D70084615B /* RoomModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +68,24 @@
 		F56382D7250B6215002C6F23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F56382DA250B6215002C6F23 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F56382DC250B6215002C6F23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5C9FAAF250B64520084615B /* FilterCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCollectionCell.swift; sourceTree = "<group>"; };
+		F5C9FAB1250B645D0084615B /* TagCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionCell.swift; sourceTree = "<group>"; };
+		F5C9FAB4250B65210084615B /* HashTag+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HashTag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F5C9FAB5250B65210084615B /* HashTag+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HashTag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F5C9FAB6250B65210084615B /* Room+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Room+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F5C9FAB7250B65210084615B /* Room+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Room+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F5C9FAB8250B65210084615B /* Average+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Average+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F5C9FAB9250B65210084615B /* Average+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Average+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F5C9FAC0250B653F0084615B /* HashTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashTagService.swift; sourceTree = "<group>"; };
+		F5C9FAC2250B65480084615B /* AverageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageService.swift; sourceTree = "<group>"; };
+		F5C9FAC4250B65540084615B /* AverageServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageServiceProtocol.swift; sourceTree = "<group>"; };
+		F5C9FAC6250B655E0084615B /* HashTagServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashTagServiceProtocol.swift; sourceTree = "<group>"; };
+		F5C9FAC8250B65660084615B /* RoomServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomServiceProtocol.swift; sourceTree = "<group>"; };
+		F5C9FACB250B65A10084615B /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		F5C9FACD250B670A0084615B /* RoomListData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RoomListData.txt; sourceTree = "<group>"; };
+		F5C9FACF250B674F0084615B /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
+		F5C9FAD1250B675D0084615B /* FileServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileServiceProtocol.swift; sourceTree = "<group>"; };
+		F5C9FAD4250B68D70084615B /* RoomModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +178,14 @@
 		F55ABBE2250B63BB007A3C3E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F5C9FAC2250B65480084615B /* AverageService.swift */,
+				F5C9FAC4250B65540084615B /* AverageServiceProtocol.swift */,
+				F5C9FAC0250B653F0084615B /* HashTagService.swift */,
+				F5C9FAC6250B655E0084615B /* HashTagServiceProtocol.swift */,
 				F55ABBE3250B63CA007A3C3E /* RoomService.swift */,
+				F5C9FAC8250B65660084615B /* RoomServiceProtocol.swift */,
+				F5C9FACF250B674F0084615B /* FileService.swift */,
+				F5C9FAD1250B675D0084615B /* FileServiceProtocol.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -168,11 +211,15 @@
 		F56382CD250B6214002C6F23 /* DabangSearch */ = {
 			isa = PBXGroup;
 			children = (
-				F55ABBE2250B63BB007A3C3E /* Services */,
-				F56382E4250B62EB002C6F23 /* Resources */,
-				F56382E3250B62E1002C6F23 /* AppStart */,
-				F56382E2250B62CA002C6F23 /* Modules */,
+				F5C9FAD3250B68260084615B /* Models */,
 				F56382DC250B6215002C6F23 /* Info.plist */,
+				F56382E3250B62E1002C6F23 /* AppStart */,
+				F5C9FAAE250B64460084615B /* Cells */,
+				F5C9FAB3250B65050084615B /* ManagedObjects */,
+				F56382E2250B62CA002C6F23 /* Modules */,
+				F56382E4250B62EB002C6F23 /* Resources */,
+				F55ABBE2250B63BB007A3C3E /* Services */,
+				F5C9FACA250B65900084615B /* Utilities */,
 			);
 			path = DabangSearch;
 			sourceTree = "<group>";
@@ -197,11 +244,50 @@
 		F56382E4250B62EB002C6F23 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F5C9FACD250B670A0084615B /* RoomListData.txt */,
 				F56382D7250B6215002C6F23 /* Assets.xcassets */,
 				F56382D9250B6215002C6F23 /* LaunchScreen.storyboard */,
 				F55ABBDF250B63B6007A3C3E /* DabangSearch.xcdatamodeld */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		F5C9FAAE250B64460084615B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F5C9FAAF250B64520084615B /* FilterCollectionCell.swift */,
+				F5C9FAB1250B645D0084615B /* TagCollectionCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F5C9FAB3250B65050084615B /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				F5C9FAB8250B65210084615B /* Average+CoreDataClass.swift */,
+				F5C9FAB9250B65210084615B /* Average+CoreDataProperties.swift */,
+				F5C9FAB4250B65210084615B /* HashTag+CoreDataClass.swift */,
+				F5C9FAB5250B65210084615B /* HashTag+CoreDataProperties.swift */,
+				F5C9FAB6250B65210084615B /* Room+CoreDataClass.swift */,
+				F5C9FAB7250B65210084615B /* Room+CoreDataProperties.swift */,
+			);
+			path = ManagedObjects;
+			sourceTree = "<group>";
+		};
+		F5C9FACA250B65900084615B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F5C9FACB250B65A10084615B /* CoreDataStack.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F5C9FAD3250B68260084615B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F5C9FAD4250B68D70084615B /* RoomModels.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F56382DB250B6215002C6F23 /* LaunchScreen.storyboard in Resources */,
+				F5C9FACE250B670A0084615B /* RoomListData.txt in Resources */,
 				F56382D8250B6215002C6F23 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,21 +405,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5C9FAC9250B65660084615B /* RoomServiceProtocol.swift in Sources */,
+				F5C9FAC1250B653F0084615B /* HashTagService.swift in Sources */,
 				F56382CF250B6214002C6F23 /* AppDelegate.swift in Sources */,
+				F5C9FAB2250B645D0084615B /* TagCollectionCell.swift in Sources */,
 				F56382D1250B6214002C6F23 /* SceneDelegate.swift in Sources */,
 				BDF57565EA0627C9BA40A705 /* HomeViewInput.swift in Sources */,
+				F5C9FABB250B65210084615B /* HashTag+CoreDataProperties.swift in Sources */,
+				F5C9FABA250B65210084615B /* HashTag+CoreDataClass.swift in Sources */,
 				825E01B15724974FCB4E4C88 /* HomeViewOutput.swift in Sources */,
+				F5C9FABD250B65210084615B /* Room+CoreDataProperties.swift in Sources */,
 				383C3C3636C7AAB3744865A9 /* HomeViewController.swift in Sources */,
 				44E64BC9C1F6DE4B992B19A1 /* HomeModuleInput.swift in Sources */,
+				F5C9FAC5250B65540084615B /* AverageServiceProtocol.swift in Sources */,
 				6AA32B5B15109C5E043AC00C /* HomePresenter.swift in Sources */,
+				F5C9FAB0250B64520084615B /* FilterCollectionCell.swift in Sources */,
+				F5C9FAC3250B65480084615B /* AverageService.swift in Sources */,
+				F5C9FABF250B65210084615B /* Average+CoreDataProperties.swift in Sources */,
 				817A96B08853F8586A44DF08 /* HomeInteractorInput.swift in Sources */,
 				F55ABBE1250B63B6007A3C3E /* DabangSearch.xcdatamodeld in Sources */,
 				F55ABBE4250B63CA007A3C3E /* RoomService.swift in Sources */,
 				25B28725EB7CFD73726F38E8 /* HomeInteractorOutput.swift in Sources */,
+				F5C9FAD2250B675D0084615B /* FileServiceProtocol.swift in Sources */,
 				1B7C33E01E1983A4C323345F /* HomeInteractor.swift in Sources */,
+				F5C9FABC250B65210084615B /* Room+CoreDataClass.swift in Sources */,
+				F5C9FAD5250B68D70084615B /* RoomModels.swift in Sources */,
+				F5C9FAD0250B674F0084615B /* FileService.swift in Sources */,
 				25E27C480D63191AFE93E957 /* HomeRouterInput.swift in Sources */,
 				61A7E63A2B0F8B78A34C0852 /* HomeRouter.swift in Sources */,
+				F5C9FAC7250B655E0084615B /* HashTagServiceProtocol.swift in Sources */,
 				336235FFB86A80C88B7868FE /* HomeConfigurator.swift in Sources */,
+				F5C9FABE250B65210084615B /* Average+CoreDataClass.swift in Sources */,
+				F5C9FACC250B65A10084615B /* CoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
