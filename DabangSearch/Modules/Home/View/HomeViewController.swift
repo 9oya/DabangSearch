@@ -12,6 +12,8 @@ class HomeViewController: UIViewController, HomeViewInput {
     
     // MARK: Properties
     var searchController: UISearchController!
+    
+    var roomTableView: UITableView!
 
     // Presenter
     var output: HomeViewOutput!
@@ -36,6 +38,10 @@ class HomeViewController: UIViewController, HomeViewInput {
     func setupInitialState() {
         setupLayout()
     }
+    
+    func reloadRoomTableView() {
+        
+    }
 }
 
 extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
@@ -58,6 +64,80 @@ extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
     }
 }
 
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    // MARK: UITableViewDataSource
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return output.numberOfHeaderSection()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return output.numberOfRooms()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: roomTableHeaderId) as? RoomTableHeader else {
+            fatalError()
+        }
+        view.roomCollectionView.dataSource = self
+        view.roomCollectionView.delegate = self
+        view.sellCollectionView.dataSource = self
+        view.sellCollectionView.delegate = self
+        view.priceCollectionView.delegate = self
+        view.priceCollectionView.dataSource = self
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: roomTableCellId, for: indexPath) as? RoomTableCell else {
+            fatalError()
+        }
+        output.configureRoomTableCell(cell: cell)
+        return cell
+    }
+    
+    // MARK: UITableViewDelegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 176
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 115
+    }
+}
+
+extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    // MARK: UICollectionViewDataSource
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return output.numberOf
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    // MARK: UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+    // MARK: UICollectionViewDelegateFlowLayout
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: CGFloat((output.roomAt(indexpath: indexPath).count * 13) + 12), height: 32)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+}
+
 extension HomeViewController {
     private func setupLayout() {
         // MARK: Setup super-view
@@ -72,10 +152,26 @@ extension HomeViewController {
         }()
         navigationItem.searchController = searchController
         
+        roomTableView = {
+            let tableView = UITableView()
+            tableView.backgroundColor = .clear
+            tableView.separatorStyle = .none
+            tableView.register(RoomTableCell.self, forCellReuseIdentifier: roomTableCellId)
+            tableView.translatesAutoresizingMaskIntoConstraints = false
+            return tableView
+        }()
+        
         // MARK: Setup UI Hierarchy
+        view.addSubview(roomTableView)
         
         // MARK: Dependency injection
+        roomTableView.dataSource = self
+        roomTableView.delegate = self
         
         // MARK: Setup constraints
+        roomTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        roomTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
+        roomTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+        roomTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
     }
 }

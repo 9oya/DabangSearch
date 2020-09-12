@@ -27,6 +27,7 @@ class HomeModuleConfigurator {
 
         let interactor = HomeInteractor()
         interactor.output = presenter
+        interactor.importRoomsIfNeeded()
 
         presenter.interactor = interactor
         viewController.output = presenter

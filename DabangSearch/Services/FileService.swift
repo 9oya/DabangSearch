@@ -16,7 +16,7 @@ final class FileService: FileServiceProtocol {
         let jsonData = try! Data(contentsOf: jsonURL)
         do {
             let roomWrapperModel = try JSONDecoder().decode(RoomWrapperModel.self, from: jsonData)
-            let averageModel = roomWrapperModel.average
+            let averageModel = roomWrapperModel.average.first!
             AverageService.shared.createAverage(monthPrice: averageModel.monthPrice, name: averageModel.name, yearPrice: averageModel.yearPrice)
             
             let roomModels = roomWrapperModel.rooms

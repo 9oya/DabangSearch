@@ -25,6 +25,6 @@ struct RoomModel: Codable {
 }
 
 struct RoomWrapperModel: Codable {
-    let average: AverageModel
+    let average: [AverageModel]
     let rooms: [RoomModel]
 }

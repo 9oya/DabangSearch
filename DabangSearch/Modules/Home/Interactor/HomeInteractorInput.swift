@@ -6,8 +6,9 @@
 //  Copyright © 2020 Dymm. All rights reserved.
 //
 
-import Foundation
+import import UIKit
 
 protocol HomeInteractorInput {
-
+    
+    func importRoomsIfNeeded()
 }

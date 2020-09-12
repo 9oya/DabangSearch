@@ -43,6 +43,12 @@
 		F5C9FAD0250B674F0084615B /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FACF250B674F0084615B /* FileService.swift */; };
 		F5C9FAD2250B675D0084615B /* FileServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAD1250B675D0084615B /* FileServiceProtocol.swift */; };
 		F5C9FAD5250B68D70084615B /* RoomModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAD4250B68D70084615B /* RoomModels.swift */; };
+		F5C9FAD7250C4CA20084615B /* RoomTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAD6250C4CA20084615B /* RoomTableHeader.swift */; };
+		F5C9FAD9250C4CB20084615B /* RoomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9FAD8250C4CB20084615B /* RoomTableCell.swift */; };
+		F5D7EEF7250C7F5300D55DBF /* CustomCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D7EEF6250C7F5300D55DBF /* CustomCollectionViewFlowLayout.swift */; };
+		F5D7EEF9250CF05800D55DBF /* FilterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D7EEF8250CF05800D55DBF /* FilterService.swift */; };
+		F5D7EEFB250CF05F00D55DBF /* FilterServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D7EEFA250CF05F00D55DBF /* FilterServiceProtocol.swift */; };
+		F5D7EEFD250CF12200D55DBF /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D7EEFC250CF12200D55DBF /* FilterModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +92,12 @@
 		F5C9FACF250B674F0084615B /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		F5C9FAD1250B675D0084615B /* FileServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileServiceProtocol.swift; sourceTree = "<group>"; };
 		F5C9FAD4250B68D70084615B /* RoomModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModels.swift; sourceTree = "<group>"; };
+		F5C9FAD6250C4CA20084615B /* RoomTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTableHeader.swift; sourceTree = "<group>"; };
+		F5C9FAD8250C4CB20084615B /* RoomTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTableCell.swift; sourceTree = "<group>"; };
+		F5D7EEF6250C7F5300D55DBF /* CustomCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		F5D7EEF8250CF05800D55DBF /* FilterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterService.swift; sourceTree = "<group>"; };
+		F5D7EEFA250CF05F00D55DBF /* FilterServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterServiceProtocol.swift; sourceTree = "<group>"; };
+		F5D7EEFC250CF12200D55DBF /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +198,8 @@
 				F5C9FAC8250B65660084615B /* RoomServiceProtocol.swift */,
 				F5C9FACF250B674F0084615B /* FileService.swift */,
 				F5C9FAD1250B675D0084615B /* FileServiceProtocol.swift */,
+				F5D7EEF8250CF05800D55DBF /* FilterService.swift */,
+				F5D7EEFA250CF05F00D55DBF /* FilterServiceProtocol.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -211,11 +225,11 @@
 		F56382CD250B6214002C6F23 /* DabangSearch */ = {
 			isa = PBXGroup;
 			children = (
-				F5C9FAD3250B68260084615B /* Models */,
 				F56382DC250B6215002C6F23 /* Info.plist */,
 				F56382E3250B62E1002C6F23 /* AppStart */,
 				F5C9FAAE250B64460084615B /* Cells */,
 				F5C9FAB3250B65050084615B /* ManagedObjects */,
+				F5C9FAD3250B68260084615B /* Models */,
 				F56382E2250B62CA002C6F23 /* Modules */,
 				F56382E4250B62EB002C6F23 /* Resources */,
 				F55ABBE2250B63BB007A3C3E /* Services */,
@@ -257,6 +271,8 @@
 			children = (
 				F5C9FAAF250B64520084615B /* FilterCollectionCell.swift */,
 				F5C9FAB1250B645D0084615B /* TagCollectionCell.swift */,
+				F5C9FAD6250C4CA20084615B /* RoomTableHeader.swift */,
+				F5C9FAD8250C4CB20084615B /* RoomTableCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -278,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				F5C9FACB250B65A10084615B /* CoreDataStack.swift */,
+				F5D7EEF6250C7F5300D55DBF /* CustomCollectionViewFlowLayout.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -286,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				F5C9FAD4250B68D70084615B /* RoomModels.swift */,
+				F5D7EEFC250CF12200D55DBF /* FilterModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -412,10 +430,13 @@
 				F56382D1250B6214002C6F23 /* SceneDelegate.swift in Sources */,
 				BDF57565EA0627C9BA40A705 /* HomeViewInput.swift in Sources */,
 				F5C9FABB250B65210084615B /* HashTag+CoreDataProperties.swift in Sources */,
+				F5D7EEFB250CF05F00D55DBF /* FilterServiceProtocol.swift in Sources */,
+				F5C9FAD7250C4CA20084615B /* RoomTableHeader.swift in Sources */,
 				F5C9FABA250B65210084615B /* HashTag+CoreDataClass.swift in Sources */,
 				825E01B15724974FCB4E4C88 /* HomeViewOutput.swift in Sources */,
 				F5C9FABD250B65210084615B /* Room+CoreDataProperties.swift in Sources */,
 				383C3C3636C7AAB3744865A9 /* HomeViewController.swift in Sources */,
+				F5D7EEFD250CF12200D55DBF /* FilterModel.swift in Sources */,
 				44E64BC9C1F6DE4B992B19A1 /* HomeModuleInput.swift in Sources */,
 				F5C9FAC5250B65540084615B /* AverageServiceProtocol.swift in Sources */,
 				6AA32B5B15109C5E043AC00C /* HomePresenter.swift in Sources */,
@@ -425,7 +446,9 @@
 				817A96B08853F8586A44DF08 /* HomeInteractorInput.swift in Sources */,
 				F55ABBE1250B63B6007A3C3E /* DabangSearch.xcdatamodeld in Sources */,
 				F55ABBE4250B63CA007A3C3E /* RoomService.swift in Sources */,
+				F5C9FAD9250C4CB20084615B /* RoomTableCell.swift in Sources */,
 				25B28725EB7CFD73726F38E8 /* HomeInteractorOutput.swift in Sources */,
+				F5D7EEF7250C7F5300D55DBF /* CustomCollectionViewFlowLayout.swift in Sources */,
 				F5C9FAD2250B675D0084615B /* FileServiceProtocol.swift in Sources */,
 				1B7C33E01E1983A4C323345F /* HomeInteractor.swift in Sources */,
 				F5C9FABC250B65210084615B /* Room+CoreDataClass.swift in Sources */,
@@ -435,6 +458,7 @@
 				61A7E63A2B0F8B78A34C0852 /* HomeRouter.swift in Sources */,
 				F5C9FAC7250B655E0084615B /* HashTagServiceProtocol.swift in Sources */,
 				336235FFB86A80C88B7868FE /* HomeConfigurator.swift in Sources */,
+				F5D7EEF9250CF05800D55DBF /* FilterService.swift in Sources */,
 				F5C9FABE250B65210084615B /* Average+CoreDataClass.swift in Sources */,
 				F5C9FACC250B65A10084615B /* CoreDataStack.swift in Sources */,
 			);

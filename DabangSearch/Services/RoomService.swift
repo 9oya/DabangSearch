@@ -32,4 +32,33 @@ class RoomService: RoomServiceProtocol {
         }
         return room
     }
+    
+    // MARK: GET Services
+    func getRooms(roomTypes: [Int] = [0, 1, 2, 3], sellTypes: [Int] = [0, 1, 2], isPriceSortAscended: Bool = true) -> [Room]? {
+        let fetchRequest: NSFetchRequest<Room> = Room.fetchRequest()
+        
+        // Filtering
+        let roomTypeArgArr: [Any] = [#keyPath(Room.roomType)] + roomTypes
+        let roomTypePredicate = NSPredicate(format: "%K = %@", argumentArray: roomTypeArgArr)
+        
+        let sellTypeArgArr: [Any] = [#keyPath(Room.sellingType)] + sellTypes
+        let sellTypePredicate = NSPredicate(format: "%K = %@", argumentArray: sellTypeArgArr)
+        
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [roomTypePredicate, sellTypePredicate])
+        
+        fetchRequest.predicate = andPredicate
+        
+        // Sorting
+        let priceSort = NSSortDescriptor(key: #keyPath(Room.priceTitle), ascending: isPriceSortAscended)
+        fetchRequest.sortDescriptors = [priceSort]
+        
+        // Execute
+        let results: [Room]?
+        do {
+            results = try managedObjContext.fetch(fetchRequest)
+        } catch {
+            return nil
+        }
+        return results
+    }
 }
