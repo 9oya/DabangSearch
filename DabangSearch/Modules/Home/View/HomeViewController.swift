@@ -39,8 +39,14 @@ class HomeViewController: UIViewController, HomeViewInput {
         setupLayout()
     }
     
+    var reloadRoomCollectionView: (() -> Void)?
+    
+    var reloadSellCollectionView: (() -> Void)?
+    
+    var reloadPriceCollectionView: (() -> Void)?
+    
     func reloadRoomTableView() {
-        
+        roomTableView.reloadData()
     }
 }
 
@@ -67,7 +73,7 @@ extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     // MARK: UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return output.numberOfHeaderSection()
+        return output.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -85,6 +91,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         view.priceCollectionView.delegate = self
         view.priceCollectionView.dataSource = self
         
+        reloadRoomCollectionView = {
+            view.roomCollectionView.reloadData()
+        }
+        
+        reloadSellCollectionView = {
+            view.sellCollectionView.reloadData()
+        }
+        
+        reloadPriceCollectionView = {
+            view.priceCollectionView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

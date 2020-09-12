@@ -11,7 +11,7 @@ import Foundation
 final class FileService: FileServiceProtocol {
     static let shared = FileService()
     
-    func importRoomsJSONSeedData() {
+    func importRoomsJSONSeedData(completion: @escaping () -> Void) {
         let jsonURL = Bundle.main.url(forResource: "RoomListData", withExtension: "txt")!
         let jsonData = try! Data(contentsOf: jsonURL)
         do {
@@ -29,7 +29,7 @@ final class FileService: FileServiceProtocol {
                     _ = hashTagService.createHashTag(room: room, title: title, priority: Int16(idx))
                 }
             }
-            
+            completion()
         } catch let error as NSError {
             print("Error importing rooms: \(error)")
         }

@@ -9,5 +9,12 @@
 import Foundation
 
 protocol HomeInteractorOutput: class {
-
+    
+    func reloadRoomCollectionView()
+    
+    func reloadSellCollectionView()
+    
+    func reloadPriceCollectionView()
+    
+    func reloadRoomTableView()
 }

@@ -11,9 +11,11 @@ import Foundation
 class FilterModel {
     let title: String
     let code: Int
+    var isSelected: Bool
     
-    init(title: String, code: Int) {
+    init(title: String, code: Int, isSelected: Bool) {
         self.title = title
         self.code = code
+        self.isSelected = isSelected
     }
 }

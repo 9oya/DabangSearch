@@ -14,4 +14,12 @@ protocol HomeViewInput: class {
     */
 
     func setupInitialState()
+    
+    var reloadRoomCollectionView: (() -> Void)? { get set }
+    
+    var reloadSellCollectionView: (() -> Void)? { get set }
+    
+    var reloadPriceCollectionView: (() -> Void)? { get set }
+    
+    func reloadRoomTableView()
 }
