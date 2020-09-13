@@ -12,13 +12,6 @@ class FilterService: FilterServiceProtocol {
     static let shared = FilterService()
     let disposeBag = DisposeBag()
     
-    let roomTypeFilters: BehaviorSubject<[FilterModel]>
-    let sellTypeFilters: BehaviorSubject<[FilterModel]>
-    let priceFilters: BehaviorSubject<[FilterModel]>
-    
-    let roomTypeFilterCodes: BehaviorSubject<[Int]>
-    let sellTypeFilterCodes: BehaviorSubject<[Int]>
-    
     // MARK: GET Services
     var getRoomTypeFilterCodes: () -> [Int]
     var getSellTypeFilterCodes: () -> [Int]
@@ -28,68 +21,47 @@ class FilterService: FilterServiceProtocol {
     var getSelectedPriceTypeFilter: () -> FilterModel
     
     init() {
-        self.roomTypeFilters = BehaviorSubject(value: [
+        let roomFilterModels = [
             FilterModel(title: "원룸", code: 0, isSelected: true),
             FilterModel(title: "투쓰리룸", code: 1, isSelected: true),
             FilterModel(title: "오피스텔", code: 2, isSelected: true),
             FilterModel(title: "아파트", code: 3, isSelected: true)
-        ])
-        self.sellTypeFilters = BehaviorSubject(value: [
+        ]
+        let sellFilterModels = [
             FilterModel(title: "월세", code: 0, isSelected: true),
             FilterModel(title: "전세", code: 1, isSelected: true),
             FilterModel(title: "매매", code: 2, isSelected: true)
-        ])
-        self.priceFilters = BehaviorSubject(value: [
+        ]
+        let priceFilterModels = [
             FilterModel(title: "오름차순", code: 0, isSelected: true),
             FilterModel(title: "내림차순", code: 1, isSelected: false)
-        ])
+        ]
         
-        // INPUT
-        roomTypeFilters
-            .map { $0.map { $0.code } }
-            .bind(to: roomTypeFilterCodes)
-            .disposed(by: disposeBag)
-        sellTypeFilters
-            .map { $0.map { $0.code } }
-            .bind(to: sellTypeFilterCodes)
-            .disposed(by: disposeBag)
+        self.getRoomTypeFilterCodes = {
+            return roomFilterModels.map { $0.code }
+        }
         
-        // OUTPUT
-        roomTypeFilterCodes
-            .subscribe(onNext: { (codes) in
-                self.getRoomTypeFilterCodes = {
-                    return codes
-                }
-            }).disposed(by: disposeBag)
-        sellTypeFilterCodes
-            .subscribe(onNext: { (codes) in
-                self.getSellTypeFilterCodes = {
-                    return codes
-                }
-            }).disposed(by: disposeBag)
+        self.getSellTypeFilterCodes = {
+            return sellFilterModels.map { $0.code }
+        }
         
-        roomTypeFilters
-            .subscribe(onNext: { (filterModels) in
-                self.getRoomTypes = {
-                    return filterModels
-                }
-            }).disposed(by: disposeBag)
-        sellTypeFilters
-            .subscribe(onNext: { (filterModels) in
-                self.getSellTypes = {
-                    return filterModels
-                }
-            }).disposed(by: disposeBag)
-        priceFilters
-            .subscribe(onNext: { (filterModels) in
-                self.getPriceTypes = {
-                    return filterModels
-                }
-                self.getSelectedPriceTypeFilter = {
-                    return filterModels.filter { $0.isSelected }.first!
-                }
-            }).disposed(by: disposeBag)
+        self.getRoomTypes = {
+            return roomFilterModels.map { $0 }
+        }
+        
+        self.getSellTypes = {
+            return sellFilterModels.map { $0 }
+        }
+        
+        self.getPriceTypes = {
+            return priceFilterModels.map { $0 }
+        }
+        
+        self.getSelectedPriceTypeFilter = {
+            return priceFilterModels.filter { $0.isSelected }.first!
+        }
     }
+    
     
     // MARK: UPDATE Services
     func toggleRoomTypeFilter(indexPath: IndexPath) -> Observable<[FilterModel]> {

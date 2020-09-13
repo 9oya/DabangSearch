@@ -19,6 +19,18 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
         view.setupInitialState()
     }
     
+    func numberOfRooms() -> Int {
+        return interactor.numberOfRooms!()
+    }
+    
+    func roomAt(indexPath: IndexPath) -> Room? {
+        return interactor.roomAt!(indexPath)
+    }
+    
+    func searchRooms() {
+        
+    }
+    
     func numberOfSections() -> Int {
         return interactor.numberOfSections()
     }
@@ -33,14 +45,6 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
     
     func numberOfPriceFilters() -> Int {
         return interactor.numberOfPriceFilters()
-    }
-    
-    func numberOfRooms() -> Int {
-        return interactor.numberOfRooms()
-    }
-    
-    func numberOfTags() -> Int {
-        return interactor.numberOfTags()
     }
     
     func roomTypeFilterAt(indexPath: IndexPath) -> FilterModel {
@@ -71,6 +75,9 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
         interactor.configureFilterCollectionCell(cell: cell, indexPath: indexPath, getFilterAt: getFilterAt)
     }
     
+    func configureRoomTableCell(cell: RoomTableCell, indexPath: IndexPath) {
+        interactor.configureRoomTableCell(cell: cell, indexPath: indexPath)
+    }
     
     // MARK: HomeInteractorOutput
     func reloadRoomCollectionView() {

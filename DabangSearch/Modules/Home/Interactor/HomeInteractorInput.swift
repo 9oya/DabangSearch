@@ -10,7 +10,15 @@ import UIKit
 
 protocol HomeInteractorInput {
     
+    func bind()
+    
     func importRoomsIfNeeded()
+    
+    var numberOfRooms: (() -> Int)? { get set }
+    
+    var roomAt: ((_ indexPath: IndexPath) -> Room?)? { get set }
+    
+    func searchRooms()
     
     func numberOfSections() -> Int
     
@@ -19,10 +27,6 @@ protocol HomeInteractorInput {
     func numberOfSellTypeFilters() -> Int
     
     func numberOfPriceFilters() -> Int
-    
-    func numberOfRooms() -> Int
-    
-    func numberOfTags() -> Int
     
     func roomTypeFilterAt(indexPath: IndexPath) -> FilterModel
     
@@ -37,4 +41,6 @@ protocol HomeInteractorInput {
     func didSelectPriceTypeCollectionView()
     
     func configureFilterCollectionCell(cell: FilterCollectionCell, indexPath: IndexPath, getFilterAt: (_ indexPath: IndexPath) -> FilterModel)
+    
+    func configureRoomTableCell(cell: RoomTableCell, indexPath: IndexPath)
 }

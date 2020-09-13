@@ -27,6 +27,14 @@ class RoomTableCell: UITableViewCell {
     
     var output: HomeViewOutput!
     
+    var numberOfItemsInSection: Int?
+    
+    var sizeForItem: ((_ indexPath: IndexPath) -> CGSize)?
+    
+    var room: Room?
+    
+    var configureTagCollectionCell: ((_ room: Room, _ cell: TagCollectionCell, _ indexPath: IndexPath) -> Void)?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayout()
@@ -40,14 +48,14 @@ class RoomTableCell: UITableViewCell {
 extension RoomTableCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return output.numberOfTags()
+        return numberOfItemsInSection ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tagCollectionCellId, for: indexPath) as? TagCollectionCell else {
             fatalError()
         }
-        output.configureTagCollectionCell(cell: cell, tag: output.tagAt(indexpath: indexPath))
+        configureTagCollectionCell!(room!, cell, indexPath)
         return cell
     }
     
@@ -55,7 +63,7 @@ extension RoomTableCell: UICollectionViewDelegate, UICollectionViewDataSource, U
     
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: CGFloat((output.tagAt(indexpath: indexPath).count * 13) + 12), height: 32)
+        return sizeForItem!(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

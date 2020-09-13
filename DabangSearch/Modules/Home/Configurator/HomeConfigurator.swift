@@ -27,6 +27,7 @@ class HomeModuleConfigurator {
 
         let interactor = HomeInteractor()
         interactor.output = presenter
+        interactor.bind()
         interactor.importRoomsIfNeeded()
 
         presenter.interactor = interactor

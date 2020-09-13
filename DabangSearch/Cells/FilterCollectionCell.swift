@@ -29,7 +29,7 @@ extension FilterCollectionCell {
         
         titleContainer = {
             let view = UIView()
-            view.layer.cornerRadius = 10.0
+            view.layer.cornerRadius = 5.0
             view.backgroundColor = .systemBlue
             view.translatesAutoresizingMaskIntoConstraints = false
             return view

@@ -31,16 +31,32 @@ class RoomTableHeader: UITableViewHeaderFooterView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func getCollectionViewType(_ collectionView: UICollectionView) -> CollectionType {
+        if collectionView == roomCollectionView {
+            return .roomTypeCollection
+        } else if collectionView == sellCollectionView {
+            return .sellTypeCollection
+        } else {
+            return .priceTypeCollection
+        }
+    }
+}
+
+enum CollectionType {
+    case roomTypeCollection, sellTypeCollection, priceTypeCollection
 }
 
 extension RoomTableHeader {
     private func configureContents() {
         // MARK: Setup super-view
+        backgroundColor = .systemBackground
         contentView.backgroundColor = .systemBackground
         
         // MARK: Setup sub-view properties
         roomCollectionView = {
             let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+            collectionView.backgroundColor = .systemBackground
             
             collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
             
@@ -50,6 +66,7 @@ extension RoomTableHeader {
         }()
         sellCollectionView = {
             let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+            collectionView.backgroundColor = .systemBackground
             
             collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
             
@@ -59,6 +76,7 @@ extension RoomTableHeader {
         }()
         priceCollectionView = {
             let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+            collectionView.backgroundColor = .systemBackground
             
             collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
             
@@ -86,7 +104,7 @@ extension RoomTableHeader {
         }()
         underLineView = {
             let view = UIView()
-            view.backgroundColor = .systemGray5
+            view.backgroundColor = .systemGray6
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()

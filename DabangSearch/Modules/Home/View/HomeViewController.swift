@@ -48,6 +48,9 @@ class HomeViewController: UIViewController, HomeViewInput {
     func reloadRoomTableView() {
         roomTableView.reloadData()
     }
+    
+    // MARK: Private
+    private var getCollectionViewType: ((_ collectionView: UICollectionView) -> CollectionType)?
 }
 
 extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
@@ -102,13 +105,21 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         reloadPriceCollectionView = {
             view.priceCollectionView.reloadData()
         }
+        
+        getCollectionViewType = view.getCollectionViewType
+        
+        view.roomTypeLabel.text = "방 종류"
+        view.sellTypeLabel.text = "매물 종류"
+        view.priceLabel.text = "가격"
+        
+        return view
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: roomTableCellId, for: indexPath) as? RoomTableCell else {
             fatalError()
         }
-        output.configureRoomTableCell(cell: cell)
+        output.configureRoomTableCell(cell: cell, indexPath: indexPath)
         return cell
     }
     
@@ -129,11 +140,34 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return output.numberOf
+        switch getCollectionViewType!(collectionView) {
+        case .roomTypeCollection:
+            return output.numberOfRoomTypeFilters()
+        case .sellTypeCollection:
+            return output.numberOfSellTypeFilters()
+        case .priceTypeCollection:
+            return output.numberOfPriceFilters()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: filterCollectionCellId, for: indexPath) as? FilterCollectionCell else {
+            fatalError()
+        }
+        
+        let getFilterAt: (_ indexPath: IndexPath) -> FilterModel = { indexPath in
+            switch self.getCollectionViewType!(collectionView) {
+            case .roomTypeCollection:
+                return self.output.roomTypeFilterAt(indexPath: indexPath)
+            case .sellTypeCollection:
+                return self.output.sellTypeFilterAt(indexPath: indexPath)
+            case .priceTypeCollection:
+                return self.output.getSelectedPriceTypeFilter()
+            }
+        }
+        
+        output.configureFilterCollectionCell(cell: cell, indexPath: indexPath, getFilterAt: getFilterAt)
+        return cell
     }
     
     // MARK: UICollectionViewDelegate
@@ -143,7 +177,18 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: CGFloat((output.roomAt(indexpath: indexPath).count * 13) + 12), height: 32)
+        
+        var text: String = ""
+        switch getCollectionViewType!(collectionView) {
+        case .roomTypeCollection:
+            text = output.roomTypeFilterAt(indexPath: indexPath).title
+        case .sellTypeCollection:
+            text = output.sellTypeFilterAt(indexPath: indexPath).title
+        case .priceTypeCollection:
+            text = output.getSelectedPriceTypeFilter().title
+        }
+        
+        return CGSize(width: CGFloat((text.count * 13) + 12), height: 32)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -173,6 +218,7 @@ extension HomeViewController {
             let tableView = UITableView()
             tableView.backgroundColor = .clear
             tableView.separatorStyle = .none
+            tableView.register(RoomTableHeader.self, forHeaderFooterViewReuseIdentifier: roomTableHeaderId)
             tableView.register(RoomTableCell.self, forCellReuseIdentifier: roomTableCellId)
             tableView.translatesAutoresizingMaskIntoConstraints = false
             return tableView

@@ -17,26 +17,10 @@ class HomeInteractor: HomeInteractorInput {
     weak var output: HomeInteractorOutput!
     
     // MARK: Private
+    private let roomService = RoomService(coreDataStack: AverageService.shared.coreDataStack)
     private var rooms: Observable<[Room]>!
     
-    // MARK: HomeInteractorInput
-    func bind() {
-        let roomService = RoomService(coreDataStack: AverageService.shared.coreDataStack)
-
-        rooms = Observable.create({ (observer) in
-            if roomService.getRooms()?.isEmpty ?? true {
-                FileService.shared.importRoomsJSONSeedData {
-                    observer.onNext(roomService.getRooms(
-                        roomTypes: FilterService.shared.getRoomTypeFilterCodes(),
-                        sellTypes: FilterService.shared.getSellTypeFilterCodes(),
-                        isPriceSortAscended: FilterService.shared.getSelectedPriceTypeFilter().code == 0 ? true : false)!
-                    )
-                }
-            }
-            return Disposables.create { }
-        })
-        
-        // INPUT
+    private func setupRooms() {
         rooms
             .subscribe(onNext: { (rooms) in
                 self.numberOfRooms = {
@@ -46,24 +30,63 @@ class HomeInteractor: HomeInteractorInput {
                 self.roomAt = { indexPath in
                     return rooms[indexPath.row]
                 }
+            }, onCompleted: {
+                self.output.reloadRoomTableView()
             }).disposed(by: disposeBag)
+    }
+    
+    private func numberOfHashTags(indexPath: IndexPath) -> Int {
+        return roomAt!(indexPath)!.hashTags!.allObjects.count
+    }
+    
+    private func hashTagAt(room: Room, indexPath: IndexPath) -> HashTag {
+        return room.hashTags!.allObjects[indexPath.item] as! HashTag
+    }
+    
+    private func configureTagCollectionCell(room: Room, cell: TagCollectionCell, indexPath: IndexPath) {
+        let hashTag = hashTagAt(room: room, indexPath: indexPath)
+        cell.tagLabel.text = hashTag.title
+    }
+    
+    // MARK: HomeInteractorInput
+    func bind() {
         
+        // INPUT
+        rooms = Observable.create({ (observer) in
+            observer.onNext(self.roomService.getRooms(
+                roomTypes: FilterService.shared.getRoomTypeFilterCodes(),
+                sellTypes: FilterService.shared.getSellTypeFilterCodes(),
+                isPriceSortAscended: FilterService.shared.getSelectedPriceTypeFilter().code == 0 ? true : false)!
+            )
+            return Disposables.create { }
+        })
+        
+        // OUTPUT
         
     }
     
     func importRoomsIfNeeded() {
-        
-        rooms.subscribe(onNext: { (rooms) in
-                self.numberOfRooms = {
-                    return rooms.count
+        Observable.just(self.roomService.getRooms())
+            .subscribe(onNext: { (rooms) in
+                if rooms?.isEmpty ?? true {
+                    FileService.shared.importRoomsJSONSeedData {
+                        self.importRoomsIfNeeded()
+                    }
+                } else {
+                    self.numberOfRooms = {
+                        return rooms!.count
+                    }
+                    
+                    self.roomAt = { indexPath in
+                        return rooms![indexPath.row]
+                    }
                 }
             }).disposed(by: disposeBag)
-        
     }
     
-    var numberOfRooms: () -> Int
+    var numberOfRooms: (() -> Int)?
     
-    var roomAt: (_ indexPath: IndexPath) -> Room
+    var roomAt: ((_ indexPath: IndexPath) -> Room?)?
     
     func searchRooms() {
         
@@ -85,10 +108,6 @@ class HomeInteractor: HomeInteractorInput {
         return 1
     }
     
-    func numberOfTags() -> Int {
-        
-    }
-    
     func roomTypeFilterAt(indexPath: IndexPath) -> FilterModel {
         return FilterService.shared.getRoomTypes()[indexPath.row]
     }
@@ -105,6 +124,7 @@ class HomeInteractor: HomeInteractorInput {
         FilterService.shared.toggleRoomTypeFilter(indexPath: indexPath)
             .subscribe(onCompleted: {
                 self.output.reloadRoomCollectionView()
+                self.setupRooms()
             }).disposed(by: disposeBag)
     }
     
@@ -112,6 +132,7 @@ class HomeInteractor: HomeInteractorInput {
         FilterService.shared.toggleSellTypeFilter(indexPath: indexPath)
             .subscribe(onSuccess: { _ in
                 self.output.reloadSellCollectionView()
+                self.setupRooms()
             }).disposed(by: disposeBag)
     }
     
@@ -119,10 +140,33 @@ class HomeInteractor: HomeInteractorInput {
         FilterService.shared.togglePriceFilter()
             .subscribe(onSuccess: { _ in
                 self.output.reloadPriceCollectionView()
+                self.setupRooms()
             }).disposed(by: disposeBag)
     }
     
     func configureFilterCollectionCell(cell: FilterCollectionCell, indexPath: IndexPath, getFilterAt: (_ indexPath: IndexPath) -> FilterModel) {
         cell.titleLabel.text = getFilterAt(indexPath).title
+    }
+    
+    func configureRoomTableCell(cell: RoomTableCell, indexPath: IndexPath) {
+        
+        let room = roomAt!(indexPath)!
+        
+        cell.room = room
+        
+        cell.numberOfItemsInSection = numberOfHashTags(indexPath: indexPath)
+        
+        cell.configureTagCollectionCell = { room, cell, indexPath in
+            self.configureTagCollectionCell(room: room, cell: cell, indexPath: indexPath)
+        }
+        
+        cell.sizeForItem = { indexPath in
+            return CGSize(
+                width: CGFloat((self.hashTagAt(room: room, indexPath: indexPath).title!.count * 13) + 12),
+                height: 32
+            )
+        }
+        
+        cell.titleLabel.text = room.priceTitle!
     }
 }

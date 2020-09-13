@@ -17,6 +17,12 @@ protocol HomeViewOutput {
 
     func viewIsReady()
     
+    func numberOfRooms() -> Int
+    
+    func roomAt(indexPath: IndexPath) -> Room?
+    
+    func searchRooms()
+    
     func numberOfSections() -> Int
     
     func numberOfRoomTypeFilters() -> Int
@@ -24,10 +30,6 @@ protocol HomeViewOutput {
     func numberOfSellTypeFilters() -> Int
     
     func numberOfPriceFilters() -> Int
-    
-    func numberOfRooms() -> Int
-    
-    func numberOfTags() -> Int
     
     func roomTypeFilterAt(indexPath: IndexPath) -> FilterModel
     
@@ -42,4 +44,6 @@ protocol HomeViewOutput {
     func didSelectPriceTypeCollectionView()
     
     func configureFilterCollectionCell(cell: FilterCollectionCell, indexPath: IndexPath, getFilterAt: (_ indexPath: IndexPath) -> FilterModel)
+    
+    func configureRoomTableCell(cell: RoomTableCell, indexPath: IndexPath)
 }
