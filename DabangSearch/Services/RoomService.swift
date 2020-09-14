@@ -19,11 +19,11 @@ class RoomService: RoomServiceProtocol {
     }
     
     // MARK: CREATE Services
-    func createRoom(desc: String, isCheck: Bool, priceTitle: String, roomType: Int16, sellingType: Int16, imgUrl: String) -> Room {
+    func createRoom(desc: String, isCheck: Bool, price: Int32, roomType: Int16, sellingType: Int16, imgUrl: String) -> Room {
         let room = Room(context: managedObjContext)
         room.desc = desc
         room.isCheck = isCheck
-        room.priceTitle = priceTitle
+        room.price = price
         room.roomType = roomType
         room.sellingType = sellingType
         room.imgUrl = imgUrl
@@ -45,11 +45,10 @@ class RoomService: RoomServiceProtocol {
         let sellTypePredicate = NSPredicate(format: "%K = %@", argumentArray: sellTypeArgArr)
         
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [roomTypePredicate, sellTypePredicate])
-        
         fetchRequest.predicate = andPredicate
         
         // Sorting
-        let priceSort = NSSortDescriptor(key: #keyPath(Room.priceTitle), ascending: isPriceSortAscended)
+        let priceSort = NSSortDescriptor(key: #keyPath(Room.price), ascending: isPriceSortAscended)
         fetchRequest.sortDescriptors = [priceSort]
         
         // Execute

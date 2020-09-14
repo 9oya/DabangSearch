@@ -47,6 +47,7 @@ class HomeViewController: UIViewController, HomeViewInput {
     
     func reloadRoomTableView() {
         roomTableView.reloadData()
+        view.hideSpinner()
     }
     
     // MARK: Private
@@ -95,6 +96,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         view.priceCollectionView.dataSource = self
         
         reloadRoomCollectionView = {
+            self.view.showSpinner()
             view.roomCollectionView.reloadData()
         }
         
@@ -116,11 +118,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: roomTableCellId, for: indexPath) as? RoomTableCell else {
-            fatalError()
-        }
-        output.configureRoomTableCell(cell: cell, indexPath: indexPath)
-        return cell
+        return output.configureRoomTableCell(tableView: tableView, indexPath: indexPath)
     }
     
     // MARK: UITableViewDelegate
@@ -172,7 +170,14 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     // MARK: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        switch getCollectionViewType!(collectionView) {
+        case .roomTypeCollection:
+            output.didSelectRoomTypeCollectionView(indexPath: indexPath)
+        case .sellTypeCollection:
+            output.didSelectSellTypeCollectionView(indexPath: indexPath)
+        case .priceTypeCollection:
+            output.didSelectPriceTypeCollectionView()
+        }
     }
     
     // MARK: UICollectionViewDelegateFlowLayout
@@ -205,21 +210,29 @@ extension HomeViewController {
         // MARK: Setup super-view
         view.backgroundColor = .systemBackground
         
+        // Remove navigationBar border
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.layoutIfNeeded()
+        
         // MARK: Setup sub-view properties
         searchController = {
             let searchController = UISearchController(searchResultsController: nil)
+            searchController.hidesNavigationBarDuringPresentation = false
             searchController.searchResultsUpdater = self
             searchController.obscuresBackgroundDuringPresentation = false
             return searchController
         }()
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         
         roomTableView = {
             let tableView = UITableView()
             tableView.backgroundColor = .clear
             tableView.separatorStyle = .none
             tableView.register(RoomTableHeader.self, forHeaderFooterViewReuseIdentifier: roomTableHeaderId)
-            tableView.register(RoomTableCell.self, forCellReuseIdentifier: roomTableCellId)
+            tableView.register(RoomRightTableCell.self, forCellReuseIdentifier: roomRightTableCellId)
+            tableView.register(RoomLeftTableCell.self, forCellReuseIdentifier: roomLeftTableCellId)
             tableView.translatesAutoresizingMaskIntoConstraints = false
             return tableView
         }()
@@ -228,6 +241,7 @@ extension HomeViewController {
         view.addSubview(roomTableView)
         
         // MARK: Dependency injection
+        searchController.searchBar.delegate = self
         roomTableView.dataSource = self
         roomTableView.delegate = self
         

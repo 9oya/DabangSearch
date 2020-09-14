@@ -66,10 +66,14 @@ class FilterService: FilterServiceProtocol {
     // MARK: UPDATE Services
     func toggleRoomTypeFilter(indexPath: IndexPath) -> Observable<[FilterModel]> {
         return Observable.create { (observer) in
+            let roomTypes = self.getRoomTypes()
+            roomTypes[indexPath.row].isSelected.toggle()
             self.getRoomTypes = {
-                let roomTypes = self.getRoomTypes()
-                roomTypes[indexPath.row].isSelected.toggle()
                 return roomTypes
+            }
+            let roomTypeCodes = roomTypes.filter { $0.isSelected }.map { $0.code }
+            self.getRoomTypeFilterCodes = {
+                return roomTypeCodes
             }
             observer.onNext(self.getRoomTypes())
             observer.onCompleted()
@@ -79,9 +83,9 @@ class FilterService: FilterServiceProtocol {
     
     func toggleSellTypeFilter(indexPath: IndexPath) -> Single<[FilterModel]> {
         return Single.create { (single) in
+            let sellTypes = self.getSellTypes()
+            sellTypes[indexPath.row].isSelected.toggle()
             self.getSellTypes = {
-                let sellTypes = self.getRoomTypes()
-                sellTypes[indexPath.row].isSelected.toggle()
                 return sellTypes
             }
             single(.success(self.getSellTypes()))
@@ -92,11 +96,12 @@ class FilterService: FilterServiceProtocol {
     
     func togglePriceFilter() -> Single<FilterModel> {
         return Single.create { (single) in
+            let priceTypes: [FilterModel] = self.getPriceTypes().map { filterModel in
+                filterModel.isSelected.toggle()
+                return filterModel
+            }
             self.getPriceTypes = {
-                return self.getPriceTypes().map { (filterModel) in
-                    filterModel.isSelected.toggle()
-                    return filterModel
-                }
+                return priceTypes
             }
             
             self.getSelectedPriceTypeFilter = {

@@ -20,21 +20,6 @@ class HomeInteractor: HomeInteractorInput {
     private let roomService = RoomService(coreDataStack: AverageService.shared.coreDataStack)
     private var rooms: Observable<[Room]>!
     
-    private func setupRooms() {
-        rooms
-            .subscribe(onNext: { (rooms) in
-                self.numberOfRooms = {
-                    return rooms.count
-                }
-                
-                self.roomAt = { indexPath in
-                    return rooms[indexPath.row]
-                }
-            }, onCompleted: {
-                self.output.reloadRoomTableView()
-            }).disposed(by: disposeBag)
-    }
-    
     private func numberOfHashTags(indexPath: IndexPath) -> Int {
         return roomAt!(indexPath)!.hashTags!.allObjects.count
     }
@@ -49,22 +34,6 @@ class HomeInteractor: HomeInteractorInput {
     }
     
     // MARK: HomeInteractorInput
-    func bind() {
-        
-        // INPUT
-        rooms = Observable.create({ (observer) in
-            observer.onNext(self.roomService.getRooms(
-                roomTypes: FilterService.shared.getRoomTypeFilterCodes(),
-                sellTypes: FilterService.shared.getSellTypeFilterCodes(),
-                isPriceSortAscended: FilterService.shared.getSelectedPriceTypeFilter().code == 0 ? true : false)!
-            )
-            return Disposables.create { }
-        })
-        
-        // OUTPUT
-        
-    }
-    
     func importRoomsIfNeeded() {
         Observable.just(self.roomService.getRooms())
             .subscribe(onNext: { (rooms) in
@@ -81,6 +50,31 @@ class HomeInteractor: HomeInteractorInput {
                         return rooms![indexPath.row]
                     }
                 }
+            }).disposed(by: disposeBag)
+    }
+    
+    func loadRooms() {
+        _ = Observable<[Room]>
+            .create({ (observer) in
+                observer.onNext(self.roomService.getRooms(
+                    roomTypes: FilterService.shared.getRoomTypeFilterCodes(),
+                    sellTypes: FilterService.shared.getSellTypeFilterCodes(),
+                    isPriceSortAscended: FilterService.shared.getSelectedPriceTypeFilter().code == 0 ? true : false)!
+                )
+                observer.onCompleted()
+                return Disposables.create { }
+            })
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (rooms) in
+                self.numberOfRooms = {
+                    return rooms.count
+                }
+                
+                self.roomAt = { indexPath in
+                    return rooms[indexPath.row]
+                }
+            }, onCompleted: {
+                self.output.reloadRoomTableView()
             }).disposed(by: disposeBag)
     }
     
@@ -122,17 +116,22 @@ class HomeInteractor: HomeInteractorInput {
     
     func didSelectRoomTypeCollectionView(indexPath: IndexPath) {
         FilterService.shared.toggleRoomTypeFilter(indexPath: indexPath)
-            .subscribe(onCompleted: {
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { _ in
                 self.output.reloadRoomCollectionView()
-                self.setupRooms()
+            }, onCompleted: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.loadRooms()
+                }
             }).disposed(by: disposeBag)
     }
     
     func didSelectSellTypeCollectionView(indexPath: IndexPath) {
         FilterService.shared.toggleSellTypeFilter(indexPath: indexPath)
+            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { _ in
                 self.output.reloadSellCollectionView()
-                self.setupRooms()
+                self.loadRooms()
             }).disposed(by: disposeBag)
     }
     
@@ -140,33 +139,80 @@ class HomeInteractor: HomeInteractorInput {
         FilterService.shared.togglePriceFilter()
             .subscribe(onSuccess: { _ in
                 self.output.reloadPriceCollectionView()
-                self.setupRooms()
+                self.loadRooms()
             }).disposed(by: disposeBag)
     }
     
     func configureFilterCollectionCell(cell: FilterCollectionCell, indexPath: IndexPath, getFilterAt: (_ indexPath: IndexPath) -> FilterModel) {
-        cell.titleLabel.text = getFilterAt(indexPath).title
+        let filterModel = getFilterAt(indexPath)
+        
+        if filterModel.title == "내림차순" || !filterModel.isSelected {
+            cell.titleContainer.backgroundColor = .systemBackground
+            cell.titleContainer.layer.borderColor = UIColor.systemGray6.cgColor
+            cell.titleContainer.layer.borderWidth = 1.0
+            cell.titleLabel.textColor = .label
+        } else {
+            cell.titleContainer.backgroundColor = .systemBlue
+            cell.titleContainer.layer.borderColor = UIColor.clear.cgColor
+            cell.titleContainer.layer.borderWidth = 0
+            cell.titleLabel.textColor = .white
+        }
+        cell.titleLabel.text = filterModel.title
     }
     
-    func configureRoomTableCell(cell: RoomTableCell, indexPath: IndexPath) {
-        
+    func configureRoomTableCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         let room = roomAt!(indexPath)!
+        var cell: RoomTableCell
+        switch RoomType(rawValue: room.roomType)! {
+        case .oneRoom, .twoThreeRoom:
+            cell = tableView.dequeueReusableCell(withIdentifier: roomRightTableCellId, for: indexPath) as! RoomRightTableCell
+        case .officetel, .apartment:
+            cell = tableView.dequeueReusableCell(withIdentifier: roomLeftTableCellId, for: indexPath) as! RoomLeftTableCell
+        }
         
         cell.room = room
-        
         cell.numberOfItemsInSection = numberOfHashTags(indexPath: indexPath)
-        
         cell.configureTagCollectionCell = { room, cell, indexPath in
             self.configureTagCollectionCell(room: room, cell: cell, indexPath: indexPath)
         }
-        
         cell.sizeForItem = { indexPath in
             return CGSize(
-                width: CGFloat((self.hashTagAt(room: room, indexPath: indexPath).title!.count * 13) + 12),
-                height: 32
+                width: CGFloat(self.hashTagAt(room: room, indexPath: indexPath).title!.count * 12),
+                height: 20
             )
         }
         
-        cell.titleLabel.text = room.priceTitle!
+        let roomType: String = APIHelper.shared.getRoomTypeTxt(roomType: RoomType(rawValue: room.roomType)!)
+        let sellType: String = APIHelper.shared.getSellTypeTxt(sellType: SellType(rawValue: room.sellingType)!)
+        let title: String = {
+            return "\(sellType) \(APIHelper.shared.convertPriceToPriceTitle(price: room.price))"
+        }()
+        
+        cell.titleLabel.text = title
+        cell.roomTypeLabel.text = roomType
+        cell.descLabel.text = room.desc!
+        cell.roomImgView.image = {
+            let url = URL(string: room.imgUrl!)
+            if url != nil {
+                if let data = try? Data(contentsOf: url!) {
+                    return UIImage(data: data) ?? nil
+                } else {
+                    return nil
+                }
+            } else {
+                return nil
+            }
+        }()
+        
+        var image: UIImage!
+        let config = UIImage.SymbolConfiguration(pointSize: UIFont.systemFontSize, weight: .regular, scale: .medium)
+        if room.isCheck {
+            image = UIImage(systemName: "star.fill", withConfiguration: config)?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal)
+        } else {
+            image = UIImage(systemName: "star", withConfiguration: config)?.withTintColor(.systemGray4, renderingMode: .alwaysOriginal)
+        }
+        cell.bookmarkButton.setImage(image, for: .normal)
+        
+        return cell
     }
 }

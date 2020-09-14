@@ -19,6 +19,7 @@
 		817A96B08853F8586A44DF08 /* HomeInteractorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77C4FEF180C2E66D86E3D34 /* HomeInteractorInput.swift */; };
 		825E01B15724974FCB4E4C88 /* HomeViewOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C555EC12624B83389156AF1 /* HomeViewOutput.swift */; };
 		BDF57565EA0627C9BA40A705 /* HomeViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D63AF7EB36067E55450B /* HomeViewInput.swift */; };
+		F5389284250F47B200FB5D5F /* UIView+Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5389283250F47B200FB5D5F /* UIView+Indicator.swift */; };
 		F55ABBE1250B63B6007A3C3E /* DabangSearch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F55ABBDF250B63B6007A3C3E /* DabangSearch.xcdatamodeld */; };
 		F55ABBE4250B63CA007A3C3E /* RoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55ABBE3250B63CA007A3C3E /* RoomService.swift */; };
 		F56382CF250B6214002C6F23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56382CE250B6214002C6F23 /* AppDelegate.swift */; };
@@ -49,6 +50,7 @@
 		F5D7EEF9250CF05800D55DBF /* FilterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D7EEF8250CF05800D55DBF /* FilterService.swift */; };
 		F5D7EEFB250CF05F00D55DBF /* FilterServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D7EEFA250CF05F00D55DBF /* FilterServiceProtocol.swift */; };
 		F5D7EEFD250CF12200D55DBF /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D7EEFC250CF12200D55DBF /* FilterModel.swift */; };
+		F5D7EF00250F129C00D55DBF /* APIConstants+APIHepler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D7EEFF250F129C00D55DBF /* APIConstants+APIHepler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +68,7 @@
 		BEC7404C35ACF85F1DF254FD /* Pods_DabangSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DabangSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D77C4FEF180C2E66D86E3D34 /* HomeInteractorInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeInteractorInput.swift; sourceTree = "<group>"; };
 		E98121CA527534A3419AD3D2 /* HomeInteractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
+		F5389283250F47B200FB5D5F /* UIView+Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Indicator.swift"; sourceTree = "<group>"; };
 		F55ABBE0250B63B6007A3C3E /* DabangSearch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DabangSearch.xcdatamodel; sourceTree = "<group>"; };
 		F55ABBE3250B63CA007A3C3E /* RoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomService.swift; sourceTree = "<group>"; };
 		F56382CB250B6214002C6F23 /* DabangSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DabangSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +101,7 @@
 		F5D7EEF8250CF05800D55DBF /* FilterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterService.swift; sourceTree = "<group>"; };
 		F5D7EEFA250CF05F00D55DBF /* FilterServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterServiceProtocol.swift; sourceTree = "<group>"; };
 		F5D7EEFC250CF12200D55DBF /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
+		F5D7EEFF250F129C00D55DBF /* APIConstants+APIHepler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIConstants+APIHepler.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		F5389282250F478B00FB5D5F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F5389283250F47B200FB5D5F /* UIView+Indicator.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		F55ABBE2250B63BB007A3C3E /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +237,8 @@
 		F56382CD250B6214002C6F23 /* DabangSearch */ = {
 			isa = PBXGroup;
 			children = (
+				F5389282250F478B00FB5D5F /* Extensions */,
+				F5D7EEFE250F127E00D55DBF /* Constants */,
 				F56382DC250B6215002C6F23 /* Info.plist */,
 				F56382E3250B62E1002C6F23 /* AppStart */,
 				F5C9FAAE250B64460084615B /* Cells */,
@@ -306,6 +320,14 @@
 				F5D7EEFC250CF12200D55DBF /* FilterModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		F5D7EEFE250F127E00D55DBF /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				F5D7EEFF250F129C00D55DBF /* APIConstants+APIHepler.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -425,6 +447,7 @@
 			files = (
 				F5C9FAC9250B65660084615B /* RoomServiceProtocol.swift in Sources */,
 				F5C9FAC1250B653F0084615B /* HashTagService.swift in Sources */,
+				F5D7EF00250F129C00D55DBF /* APIConstants+APIHepler.swift in Sources */,
 				F56382CF250B6214002C6F23 /* AppDelegate.swift in Sources */,
 				F5C9FAB2250B645D0084615B /* TagCollectionCell.swift in Sources */,
 				F56382D1250B6214002C6F23 /* SceneDelegate.swift in Sources */,
@@ -456,6 +479,7 @@
 				F5C9FAD0250B674F0084615B /* FileService.swift in Sources */,
 				25E27C480D63191AFE93E957 /* HomeRouterInput.swift in Sources */,
 				61A7E63A2B0F8B78A34C0852 /* HomeRouter.swift in Sources */,
+				F5389284250F47B200FB5D5F /* UIView+Indicator.swift in Sources */,
 				F5C9FAC7250B655E0084615B /* HashTagServiceProtocol.swift in Sources */,
 				336235FFB86A80C88B7868FE /* HomeConfigurator.swift in Sources */,
 				F5D7EEF9250CF05800D55DBF /* FilterService.swift in Sources */,

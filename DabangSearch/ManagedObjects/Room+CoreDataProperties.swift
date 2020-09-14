@@ -2,7 +2,7 @@
 //  Room+CoreDataProperties.swift
 //  
 //
-//  Created by Eido Goya on 2020/09/11.
+//  Created by Eido Goya on 2020/09/14.
 //
 //
 
@@ -19,7 +19,7 @@ extension Room {
     @NSManaged public var desc: String?
     @NSManaged public var imgUrl: String?
     @NSManaged public var isCheck: Bool
-    @NSManaged public var priceTitle: String?
+    @NSManaged public var price: Int32
     @NSManaged public var roomType: Int16
     @NSManaged public var sellingType: Int16
     @NSManaged public var hashTags: NSSet?

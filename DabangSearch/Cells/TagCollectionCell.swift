@@ -29,7 +29,7 @@ extension TagCollectionCell {
         
         tagContainer = {
             let view = UIView()
-            view.layer.cornerRadius = 10.0
+            view.layer.cornerRadius = 3.0
             view.backgroundColor = .systemGray6
             view.translatesAutoresizingMaskIntoConstraints = false
             return view

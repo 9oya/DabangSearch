@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import RxSwift
 
 protocol HomeInteractorInput {
     
-    func bind()
-    
     func importRoomsIfNeeded()
+    
+    func loadRooms()
     
     var numberOfRooms: (() -> Int)? { get set }
     
@@ -42,5 +43,5 @@ protocol HomeInteractorInput {
     
     func configureFilterCollectionCell(cell: FilterCollectionCell, indexPath: IndexPath, getFilterAt: (_ indexPath: IndexPath) -> FilterModel)
     
-    func configureRoomTableCell(cell: RoomTableCell, indexPath: IndexPath)
+    func configureRoomTableCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }

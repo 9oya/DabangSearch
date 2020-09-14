@@ -14,7 +14,7 @@
         <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="imgUrl" optional="YES" attributeType="String"/>
         <attribute name="isCheck" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="priceTitle" optional="YES" attributeType="String"/>
+        <attribute name="price" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="roomType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sellingType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="hashTags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HashTag" inverseName="room" inverseEntity="HashTag"/>

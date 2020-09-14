@@ -17,6 +17,8 @@ protocol HomeViewOutput {
 
     func viewIsReady()
     
+    func loadRooms()
+    
     func numberOfRooms() -> Int
     
     func roomAt(indexPath: IndexPath) -> Room?
@@ -45,5 +47,5 @@ protocol HomeViewOutput {
     
     func configureFilterCollectionCell(cell: FilterCollectionCell, indexPath: IndexPath, getFilterAt: (_ indexPath: IndexPath) -> FilterModel)
     
-    func configureRoomTableCell(cell: RoomTableCell, indexPath: IndexPath)
+    func configureRoomTableCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }

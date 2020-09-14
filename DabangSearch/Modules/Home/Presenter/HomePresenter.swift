@@ -19,6 +19,10 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
         view.setupInitialState()
     }
     
+    func loadRooms() {
+        interactor.loadRooms()
+    }
+    
     func numberOfRooms() -> Int {
         return interactor.numberOfRooms!()
     }
@@ -75,8 +79,8 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
         interactor.configureFilterCollectionCell(cell: cell, indexPath: indexPath, getFilterAt: getFilterAt)
     }
     
-    func configureRoomTableCell(cell: RoomTableCell, indexPath: IndexPath) {
-        interactor.configureRoomTableCell(cell: cell, indexPath: indexPath)
+    func configureRoomTableCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        return interactor.configureRoomTableCell(tableView: tableView, indexPath: indexPath)
     }
     
     // MARK: HomeInteractorOutput
