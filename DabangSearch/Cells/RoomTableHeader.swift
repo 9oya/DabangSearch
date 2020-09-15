@@ -54,6 +54,12 @@ extension RoomTableHeader {
         contentView.backgroundColor = .systemBackground
         
         // MARK: Setup sub-view properties
+        backgroundView = {
+            let view = UIView()
+            backgroundView?.backgroundColor = .clear
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
+        }()
         roomCollectionView = {
             let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
             collectionView.backgroundColor = .systemBackground
@@ -110,6 +116,7 @@ extension RoomTableHeader {
         }()
         
         // MARK: Setup UI Hierarchy
+        contentView.addSubview(backgroundView!)
         contentView.addSubview(roomTypeLabel)
         contentView.addSubview(roomCollectionView)
         contentView.addSubview(sellTypeLabel)

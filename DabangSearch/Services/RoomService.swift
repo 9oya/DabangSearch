@@ -34,17 +34,40 @@ class RoomService: RoomServiceProtocol {
     }
     
     // MARK: GET Services
-    func getRooms(roomTypes: [Int] = [0, 1, 2, 3], sellTypes: [Int] = [0, 1, 2], isPriceSortAscended: Bool = true) -> [Room]? {
+    func getRooms(roomTypes: [Int] = [0, 1, 2, 3], sellTypes: [Int] = [0, 1, 2], isPriceSortAscended: Bool = true, keyword: String? = nil) -> [Room]? {
         let fetchRequest: NSFetchRequest<Room> = Room.fetchRequest()
         
+        // Pagination
+        fetchRequest.fetchOffset = 0
+        fetchRequest.fetchLimit = 10
+        
         // Filtering
-        let roomTypeArgArr: [Any] = [#keyPath(Room.roomType)] + roomTypes
-        let roomTypePredicate = NSPredicate(format: "%K = %@", argumentArray: roomTypeArgArr)
+        var andSubpredicates = [NSPredicate]()
+        var orSubpredicates = [NSPredicate]()
         
-        let sellTypeArgArr: [Any] = [#keyPath(Room.sellingType)] + sellTypes
-        let sellTypePredicate = NSPredicate(format: "%K = %@", argumentArray: sellTypeArgArr)
+        // OR: roomTypes
+        for roomType in roomTypes {
+            orSubpredicates.append(
+                NSPredicate(format: "%K = %@", argumentArray: [#keyPath(Room.roomType), roomType])
+            )
+        }
+        andSubpredicates.append(
+            NSCompoundPredicate(type: .or, subpredicates: orSubpredicates)
+        )
         
-        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [roomTypePredicate, sellTypePredicate])
+        // OR: sellingTypes
+        orSubpredicates = [NSPredicate]()
+        for sellType in sellTypes {
+            orSubpredicates.append(
+                NSPredicate(format: "%K = %@", argumentArray: [#keyPath(Room.sellingType), sellType])
+            )
+        }
+        andSubpredicates.append(
+            NSCompoundPredicate(type: .or, subpredicates: orSubpredicates)
+        )
+        
+        // AND: roomTypes, sellingTypes
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: andSubpredicates)
         fetchRequest.predicate = andPredicate
         
         // Sorting
@@ -58,6 +81,21 @@ class RoomService: RoomServiceProtocol {
         } catch {
             return nil
         }
-        return results
+        
+        if keyword != nil {
+            
+            let jamoKeyword = Jamo.getJamo(keyword!)
+            
+            return results!.filter {
+                ($0.hashTags!.allObjects as! [HashTag]).map { $0.title }.filter {
+                    
+                    Jamo.getJamo($0!).contains(jamoKeyword)
+                    
+//                    return $0!.contains(keyword!)
+                }.count > 0 ? true : false
+            }
+        } else {
+            return results
+        }
     }
 }

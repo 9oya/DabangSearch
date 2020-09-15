@@ -17,13 +17,11 @@ protocol HomeViewOutput {
 
     func viewIsReady()
     
-    func loadRooms()
+    func searchRooms(keyword: String?)
     
     func numberOfRooms() -> Int
     
     func roomAt(indexPath: IndexPath) -> Room?
-    
-    func searchRooms()
     
     func numberOfSections() -> Int
     

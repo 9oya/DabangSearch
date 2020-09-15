@@ -88,6 +88,10 @@ class FilterService: FilterServiceProtocol {
             self.getSellTypes = {
                 return sellTypes
             }
+            let sellTypeCodes = sellTypes.filter { $0.isSelected }.map { $0.code }
+            self.getSellTypeFilterCodes = {
+                return sellTypeCodes
+            }
             single(.success(self.getSellTypes()))
             return Disposables.create { }
         }
@@ -103,11 +107,9 @@ class FilterService: FilterServiceProtocol {
             self.getPriceTypes = {
                 return priceTypes
             }
-            
             self.getSelectedPriceTypeFilter = {
                 return self.getPriceTypes().filter { $0.isSelected }.first!
             }
-            
             single(.success(self.getSelectedPriceTypeFilter()))
             
             return Disposables.create { }

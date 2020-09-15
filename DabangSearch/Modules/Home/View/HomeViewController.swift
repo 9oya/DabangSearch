@@ -33,6 +33,9 @@ class HomeViewController: UIViewController, HomeViewInput {
     }
     
     // MARK: Actions
+    @objc func dismissKeyboard() {
+        searchController.searchBar.endEditing(true)
+    }
 
     // MARK: HomeViewInput
     func setupInitialState() {
@@ -57,7 +60,10 @@ class HomeViewController: UIViewController, HomeViewInput {
 extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
     // MARK: UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController) {
-        print(searchController.searchBar.text!)
+        if searchController.searchBar.text?.count ?? 0 > 0 {
+            self.view.showSpinner()
+            self.output.searchRooms(keyword: searchController.searchBar.text!)
+        }
     }
     
     // MARK: UISearchBarDelegate
@@ -88,6 +94,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: roomTableHeaderId) as? RoomTableHeader else {
             fatalError()
         }
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.backgroundView!.addGestureRecognizer(gestureRecognizer)
+        view.backgroundView!.isUserInteractionEnabled = true
+        
         view.roomCollectionView.dataSource = self
         view.roomCollectionView.delegate = self
         view.sellCollectionView.dataSource = self
@@ -101,10 +112,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         reloadSellCollectionView = {
+            self.view.showSpinner()
             view.sellCollectionView.reloadData()
         }
         
         reloadPriceCollectionView = {
+            self.view.showSpinner()
             view.priceCollectionView.reloadData()
         }
         
@@ -123,7 +136,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        dismissKeyboard()
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -132,6 +145,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 115
+    }
+    
+    // MARK: UIScrollViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        dismissKeyboard()
     }
 }
 

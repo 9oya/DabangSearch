@@ -53,13 +53,33 @@ class HomeInteractor: HomeInteractorInput {
             }).disposed(by: disposeBag)
     }
     
-    func loadRooms() {
+    func loadRooms(keyword: String? = nil) {
+        DispatchQueue.global().async {
+            let rooms = self.roomService.getRooms(
+                roomTypes: FilterService.shared.getRoomTypeFilterCodes(),
+                sellTypes: FilterService.shared.getSellTypeFilterCodes(),
+                isPriceSortAscended: FilterService.shared.getSelectedPriceTypeFilter().code == 0 ? true : false,
+                keyword: keyword)!
+            self.numberOfRooms = {
+                return rooms.count
+            }
+            self.roomAt = { indexPath in
+                return rooms[indexPath.row]
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.output.reloadRoomTableView()
+            }
+        }
+    }
+    
+    func loadRooms2(keyword: String? = nil) {
         _ = Observable<[Room]>
             .create({ (observer) in
                 observer.onNext(self.roomService.getRooms(
                     roomTypes: FilterService.shared.getRoomTypeFilterCodes(),
                     sellTypes: FilterService.shared.getSellTypeFilterCodes(),
-                    isPriceSortAscended: FilterService.shared.getSelectedPriceTypeFilter().code == 0 ? true : false)!
+                    isPriceSortAscended: FilterService.shared.getSelectedPriceTypeFilter().code == 0 ? true : false,
+                    keyword: keyword)!
                 )
                 observer.onCompleted()
                 return Disposables.create { }
@@ -74,17 +94,15 @@ class HomeInteractor: HomeInteractorInput {
                     return rooms[indexPath.row]
                 }
             }, onCompleted: {
-                self.output.reloadRoomTableView()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.output.reloadRoomTableView()
+                }
             }).disposed(by: disposeBag)
     }
     
     var numberOfRooms: (() -> Int)?
     
     var roomAt: ((_ indexPath: IndexPath) -> Room?)?
-    
-    func searchRooms() {
-        
-    }
     
     func numberOfSections() -> Int {
         return 1
@@ -131,15 +149,22 @@ class HomeInteractor: HomeInteractorInput {
             .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { _ in
                 self.output.reloadSellCollectionView()
-                self.loadRooms()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.loadRooms()
+                }
             }).disposed(by: disposeBag)
     }
     
     func didSelectPriceTypeCollectionView() {
         FilterService.shared.togglePriceFilter()
+            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { _ in
                 self.output.reloadPriceCollectionView()
+                
                 self.loadRooms()
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                    self.loadRooms()
+//                }
             }).disposed(by: disposeBag)
     }
     

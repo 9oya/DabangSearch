@@ -19,8 +19,8 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
         view.setupInitialState()
     }
     
-    func loadRooms() {
-        interactor.loadRooms()
+    func searchRooms(keyword: String? = nil) {
+        interactor.loadRooms(keyword: keyword)
     }
     
     func numberOfRooms() -> Int {
@@ -29,10 +29,6 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
     
     func roomAt(indexPath: IndexPath) -> Room? {
         return interactor.roomAt!(indexPath)
-    }
-    
-    func searchRooms() {
-        
     }
     
     func numberOfSections() -> Int {

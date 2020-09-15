@@ -57,6 +57,8 @@ class RoomTableCell: UITableViewCell {
             collectionView.backgroundColor = .green
             collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
             
+            collectionView.isScrollEnabled = false
+            
             collectionView.register(TagCollectionCell.self, forCellWithReuseIdentifier: tagCollectionCellId)
             collectionView.translatesAutoresizingMaskIntoConstraints = false
             return collectionView

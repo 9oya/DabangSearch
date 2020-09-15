@@ -20,6 +20,7 @@
 		825E01B15724974FCB4E4C88 /* HomeViewOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C555EC12624B83389156AF1 /* HomeViewOutput.swift */; };
 		BDF57565EA0627C9BA40A705 /* HomeViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D63AF7EB36067E55450B /* HomeViewInput.swift */; };
 		F5389284250F47B200FB5D5F /* UIView+Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5389283250F47B200FB5D5F /* UIView+Indicator.swift */; };
+		F53892862510579A00FB5D5F /* Jamo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53892852510579A00FB5D5F /* Jamo.swift */; };
 		F55ABBE1250B63B6007A3C3E /* DabangSearch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F55ABBDF250B63B6007A3C3E /* DabangSearch.xcdatamodeld */; };
 		F55ABBE4250B63CA007A3C3E /* RoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55ABBE3250B63CA007A3C3E /* RoomService.swift */; };
 		F56382CF250B6214002C6F23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56382CE250B6214002C6F23 /* AppDelegate.swift */; };
@@ -69,6 +70,7 @@
 		D77C4FEF180C2E66D86E3D34 /* HomeInteractorInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeInteractorInput.swift; sourceTree = "<group>"; };
 		E98121CA527534A3419AD3D2 /* HomeInteractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
 		F5389283250F47B200FB5D5F /* UIView+Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Indicator.swift"; sourceTree = "<group>"; };
+		F53892852510579A00FB5D5F /* Jamo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jamo.swift; sourceTree = "<group>"; };
 		F55ABBE0250B63B6007A3C3E /* DabangSearch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DabangSearch.xcdatamodel; sourceTree = "<group>"; };
 		F55ABBE3250B63CA007A3C3E /* RoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomService.swift; sourceTree = "<group>"; };
 		F56382CB250B6214002C6F23 /* DabangSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DabangSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -309,6 +311,7 @@
 			children = (
 				F5C9FACB250B65A10084615B /* CoreDataStack.swift */,
 				F5D7EEF6250C7F5300D55DBF /* CustomCollectionViewFlowLayout.swift */,
+				F53892852510579A00FB5D5F /* Jamo.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				F5C9FAC9250B65660084615B /* RoomServiceProtocol.swift in Sources */,
 				F5C9FAC1250B653F0084615B /* HashTagService.swift in Sources */,
 				F5D7EF00250F129C00D55DBF /* APIConstants+APIHepler.swift in Sources */,
+				F53892862510579A00FB5D5F /* Jamo.swift in Sources */,
 				F56382CF250B6214002C6F23 /* AppDelegate.swift in Sources */,
 				F5C9FAB2250B645D0084615B /* TagCollectionCell.swift in Sources */,
 				F56382D1250B6214002C6F23 /* SceneDelegate.swift in Sources */,

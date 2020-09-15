@@ -13,13 +13,11 @@ protocol HomeInteractorInput {
     
     func importRoomsIfNeeded()
     
-    func loadRooms()
+    func loadRooms(keyword: String?)
     
     var numberOfRooms: (() -> Int)? { get set }
     
     var roomAt: ((_ indexPath: IndexPath) -> Room?)? { get set }
-    
-    func searchRooms()
     
     func numberOfSections() -> Int
     
