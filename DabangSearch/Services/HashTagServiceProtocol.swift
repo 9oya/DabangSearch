@@ -10,4 +10,6 @@ import Foundation
 
 protocol HashTagServiceProtocol {
     
+    // MARK: CREATE Services
+    func createHashTag(room: Room, title: String, priority: Int16) -> HashTag
 }

@@ -10,4 +10,9 @@ import Foundation
 
 protocol AverageServiceProtocol {
     
+    // MARK: CREATE Services
+    func createAverage(monthPrice: String, name: String, yearPrice: String)
+    
+    // MARK: GET Services
+    func getAverage() -> Average?
 }

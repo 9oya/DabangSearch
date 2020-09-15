@@ -12,7 +12,6 @@ class HomeViewController: UIViewController, HomeViewInput {
     
     // MARK: Properties
     var searchController: UISearchController!
-    
     var roomTableView: UITableView!
 
     // Presenter
@@ -21,7 +20,7 @@ class HomeViewController: UIViewController, HomeViewInput {
     // DI
     let configurator = HomeModuleConfigurator()
     
-    // ScrollToLoading
+    // Props for scroll to load more
     var searchText: String?
     var lastContentOffset: CGFloat = 0.0
     var isScrollToLoading: Bool = false
@@ -76,15 +75,15 @@ class HomeViewController: UIViewController, HomeViewInput {
 extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
     // MARK: UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController) {
-        if searchController.searchBar.text?.isEmpty ?? true {
-            return
-        }
-        
         fetchStart = fetchSize
         lastContentOffset = 0.0
         isScrollToLoading = false
         
-        self.view.showSpinner()
+        if searchController.searchBar.text?.isEmpty ?? true {
+            return
+        }
+        
+        view.showSpinner()
         Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
             self.searchText = searchController.searchBar.text!
             self.output.searchRooms(keyword: searchController.searchBar.text!, fetchStart: 0, fetchSize: 11)
@@ -92,16 +91,24 @@ extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
     }
     
     // MARK: UISearchBarDelegate
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            fetchStart = fetchSize
+            lastContentOffset = 0.0
+            isScrollToLoading = false
+            self.searchText = nil
+            self.output.searchRooms(keyword: nil, fetchStart: 0, fetchSize: 11)
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.output.searchRooms(keyword: nil, fetchStart: 0, fetchSize: 11)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        fetchStart = fetchSize
+        lastContentOffset = 0.0
+        isScrollToLoading = false
+        searchText = nil
         
+        view.showSpinner()
+        output.searchRooms(keyword: nil, fetchStart: 0, fetchSize: 11)
     }
 }
 
@@ -187,9 +194,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             lastContentOffset = scrollView.contentOffset.y
         }
         if (scrollView.frame.size.height + scrollView.contentOffset.y) > (scrollView.contentSize.height - 200) {
-            print(output.numberOfRooms())
-            print(fetchStart)
-            print(scrollView.contentSize.height)
             if output.numberOfRooms() == fetchStart {
                 // Case searched result count is equal to fetchStart that means probably theres more...
                 isScrollToLoading = true

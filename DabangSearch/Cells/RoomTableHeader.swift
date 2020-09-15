@@ -61,30 +61,30 @@ extension RoomTableHeader {
             return view
         }()
         roomCollectionView = {
-            let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
             collectionView.backgroundColor = .systemBackground
-            
-            collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
             
             collectionView.register(FilterCollectionCell.self, forCellWithReuseIdentifier: filterCollectionCellId)
             collectionView.translatesAutoresizingMaskIntoConstraints = false
             return collectionView
         }()
         sellCollectionView = {
-            let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
             collectionView.backgroundColor = .systemBackground
-            
-            collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
-            
+
             collectionView.register(FilterCollectionCell.self, forCellWithReuseIdentifier: filterCollectionCellId)
             collectionView.translatesAutoresizingMaskIntoConstraints = false
             return collectionView
         }()
         priceCollectionView = {
-            let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
             collectionView.backgroundColor = .systemBackground
-            
-            collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
             
             collectionView.register(FilterCollectionCell.self, forCellWithReuseIdentifier: filterCollectionCellId)
             collectionView.translatesAutoresizingMaskIntoConstraints = false

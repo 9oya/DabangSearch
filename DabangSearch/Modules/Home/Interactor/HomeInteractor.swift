@@ -97,10 +97,6 @@ class HomeInteractor: HomeInteractorInput {
     
     var roomAt: ((_ indexPath: IndexPath) -> Room?)?
     
-    func getAverage() -> Average {
-        return AverageService.shared.getAverage()!
-    }
-    
     func numberOfSections() -> Int {
         return 1
     }

@@ -19,8 +19,6 @@ protocol HomeInteractorInput {
     
     var roomAt: ((_ indexPath: IndexPath) -> Room?)? { get set }
     
-    func getAverage() -> Average
-    
     func numberOfSections() -> Int
     
     func numberOfRoomTypeFilters() -> Int

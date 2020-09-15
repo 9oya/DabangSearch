@@ -15,26 +15,20 @@ class RoomTableCell: UITableViewCell {
     
     // MARK: Properties
     var tagCollectionView: UICollectionView!
-    
     var titleLabel: UILabel!
     var roomTypeLabel: UILabel!
     var descLabel: UILabel!
-    
     var roomImgView: UIImageView!
-    
     var bookmarkButton: UIButton!
-    
     var underLineView: UIView!
     
     var output: HomeViewOutput!
-    
     var numberOfItemsInSection: Int?
-    
     var sizeForItem: ((_ indexPath: IndexPath) -> CGSize)?
-    
     var room: Room?
-    
     var configureTagCollectionCell: ((_ room: Room, _ cell: TagCollectionCell, _ indexPath: IndexPath) -> Void)?
+    
+    private var overFolowCount: Int = 0
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -53,9 +47,10 @@ class RoomTableCell: UITableViewCell {
         
         // MARK: Setup sub-view properties
         tagCollectionView = {
-            let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-            collectionView.backgroundColor = .green
-            collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+            collectionView.backgroundColor = .clear
             
             collectionView.isScrollEnabled = false
             
@@ -126,6 +121,20 @@ class RoomTableCell: UITableViewCell {
 extension RoomTableCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if numberOfItemsInSection ?? 0 > 0 {
+            overFolowCount = 0
+            let collectionViewWidth = frame.width - 30 - 30 - 126
+            var currSizeOfCells: CGFloat = 0
+            for idx in 0..<numberOfItemsInSection! {
+                currSizeOfCells += sizeForItem!(IndexPath(row: idx, section: 0)).width + 5
+                if currSizeOfCells >= collectionViewWidth {
+                    overFolowCount = idx + 1
+                    return overFolowCount
+                }
+            }
+        }
+        
         return numberOfItemsInSection ?? 0
     }
     
@@ -133,7 +142,13 @@ extension RoomTableCell: UICollectionViewDelegate, UICollectionViewDataSource, U
         guard  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tagCollectionCellId, for: indexPath) as? TagCollectionCell else {
             fatalError()
         }
-        configureTagCollectionCell!(room!, cell, indexPath)
+        
+        if overFolowCount > 0 && indexPath.row == (overFolowCount - 1) {
+            cell.tagLabel.text = "..."
+        } else {
+            configureTagCollectionCell!(room!, cell, indexPath)
+        }
+        
         return cell
     }
     
@@ -141,15 +156,19 @@ extension RoomTableCell: UICollectionViewDelegate, UICollectionViewDataSource, U
     
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return sizeForItem!(indexPath)
+        if overFolowCount > 0 && indexPath.row == (overFolowCount - 1) {
+            return CGSize(width: 13, height: 20)
+        } else {
+            return sizeForItem!(indexPath)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 0
     }
 }
 
