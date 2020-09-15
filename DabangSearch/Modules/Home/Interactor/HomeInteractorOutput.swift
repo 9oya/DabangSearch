@@ -6,7 +6,7 @@
 //  Copyright © 2020 Dymm. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol HomeInteractorOutput: class {
     
@@ -17,4 +17,8 @@ protocol HomeInteractorOutput: class {
     func reloadPriceCollectionView()
     
     func reloadRoomTableView()
+    
+    func scrollToTopTableView()
+    
+    func toggleIsScrollToLoading()
 }

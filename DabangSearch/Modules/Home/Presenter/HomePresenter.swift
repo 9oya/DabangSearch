@@ -18,9 +18,8 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
     func viewIsReady() {
         view.setupInitialState()
     }
-    
-    func searchRooms(keyword: String? = nil) {
-        interactor.loadRooms(keyword: keyword)
+    func searchRooms(keyword: String? = nil, fetchStart: Int, fetchSize: Int) {
+        interactor.loadRooms(keyword: keyword, fetchStart: fetchStart, fetchSize: fetchSize)
     }
     
     func numberOfRooms() -> Int {
@@ -75,6 +74,10 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
         interactor.configureFilterCollectionCell(cell: cell, indexPath: indexPath, getFilterAt: getFilterAt)
     }
     
+    func getRoomTableCellHeight(indexPath: IndexPath) -> CGFloat {
+        return interactor.getRoomTableCellHeight(indexPath: indexPath)
+    }
+    
     func configureRoomTableCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         return interactor.configureRoomTableCell(tableView: tableView, indexPath: indexPath)
     }
@@ -94,5 +97,13 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
     
     func reloadRoomTableView() {
         view.reloadRoomTableView()
+    }
+    
+    func scrollToTopTableView() {
+        view.scrollToTopTableView()
+    }
+    
+    func toggleIsScrollToLoading() {
+        view.toggleIsScrollToLoading()
     }
 }

@@ -21,6 +21,8 @@
 		BDF57565EA0627C9BA40A705 /* HomeViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D63AF7EB36067E55450B /* HomeViewInput.swift */; };
 		F5389284250F47B200FB5D5F /* UIView+Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5389283250F47B200FB5D5F /* UIView+Indicator.swift */; };
 		F53892862510579A00FB5D5F /* Jamo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53892852510579A00FB5D5F /* Jamo.swift */; };
+		F53892882510B81500FB5D5F /* AvgTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53892872510B81500FB5D5F /* AvgTableCell.swift */; };
+		F538928A2510BB1E00FB5D5F /* UIColor+HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53892892510BB1E00FB5D5F /* UIColor+HexColor.swift */; };
 		F55ABBE1250B63B6007A3C3E /* DabangSearch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F55ABBDF250B63B6007A3C3E /* DabangSearch.xcdatamodeld */; };
 		F55ABBE4250B63CA007A3C3E /* RoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55ABBE3250B63CA007A3C3E /* RoomService.swift */; };
 		F56382CF250B6214002C6F23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56382CE250B6214002C6F23 /* AppDelegate.swift */; };
@@ -71,6 +73,8 @@
 		E98121CA527534A3419AD3D2 /* HomeInteractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
 		F5389283250F47B200FB5D5F /* UIView+Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Indicator.swift"; sourceTree = "<group>"; };
 		F53892852510579A00FB5D5F /* Jamo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jamo.swift; sourceTree = "<group>"; };
+		F53892872510B81500FB5D5F /* AvgTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvgTableCell.swift; sourceTree = "<group>"; };
+		F53892892510BB1E00FB5D5F /* UIColor+HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexColor.swift"; sourceTree = "<group>"; };
 		F55ABBE0250B63B6007A3C3E /* DabangSearch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DabangSearch.xcdatamodel; sourceTree = "<group>"; };
 		F55ABBE3250B63CA007A3C3E /* RoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomService.swift; sourceTree = "<group>"; };
 		F56382CB250B6214002C6F23 /* DabangSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DabangSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				F5389283250F47B200FB5D5F /* UIView+Indicator.swift */,
+				F53892892510BB1E00FB5D5F /* UIColor+HexColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 				F5C9FAB1250B645D0084615B /* TagCollectionCell.swift */,
 				F5C9FAD6250C4CA20084615B /* RoomTableHeader.swift */,
 				F5C9FAD8250C4CB20084615B /* RoomTableCell.swift */,
+				F53892872510B81500FB5D5F /* AvgTableCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -449,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5C9FAC9250B65660084615B /* RoomServiceProtocol.swift in Sources */,
+				F53892882510B81500FB5D5F /* AvgTableCell.swift in Sources */,
 				F5C9FAC1250B653F0084615B /* HashTagService.swift in Sources */,
 				F5D7EF00250F129C00D55DBF /* APIConstants+APIHepler.swift in Sources */,
 				F53892862510579A00FB5D5F /* Jamo.swift in Sources */,
@@ -476,6 +483,7 @@
 				F5C9FAD9250C4CB20084615B /* RoomTableCell.swift in Sources */,
 				25B28725EB7CFD73726F38E8 /* HomeInteractorOutput.swift in Sources */,
 				F5D7EEF7250C7F5300D55DBF /* CustomCollectionViewFlowLayout.swift in Sources */,
+				F538928A2510BB1E00FB5D5F /* UIColor+HexColor.swift in Sources */,
 				F5C9FAD2250B675D0084615B /* FileServiceProtocol.swift in Sources */,
 				1B7C33E01E1983A4C323345F /* HomeInteractor.swift in Sources */,
 				F5C9FABC250B65210084615B /* Room+CoreDataClass.swift in Sources */,

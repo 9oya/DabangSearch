@@ -34,12 +34,12 @@ class RoomService: RoomServiceProtocol {
     }
     
     // MARK: GET Services
-    func getRooms(roomTypes: [Int] = [0, 1, 2, 3], sellTypes: [Int] = [0, 1, 2], isPriceSortAscended: Bool = true, keyword: String? = nil) -> [Room]? {
+    func getRooms(roomTypes: [Int] = [0, 1, 2, 3], sellTypes: [Int] = [0, 1, 2], isPriceSortAscended: Bool = true, keyword: String? = nil, fetchStart: Int, fetchSize: Int) -> [Room]? {
         let fetchRequest: NSFetchRequest<Room> = Room.fetchRequest()
         
         // Pagination
-        fetchRequest.fetchOffset = 0
-        fetchRequest.fetchLimit = 10
+        fetchRequest.fetchOffset = fetchStart
+        fetchRequest.fetchLimit = fetchSize
         
         // Filtering
         var andSubpredicates = [NSPredicate]()
@@ -83,15 +83,10 @@ class RoomService: RoomServiceProtocol {
         }
         
         if keyword != nil {
-            
             let jamoKeyword = Jamo.getJamo(keyword!)
-            
             return results!.filter {
                 ($0.hashTags!.allObjects as! [HashTag]).map { $0.title }.filter {
-                    
                     Jamo.getJamo($0!).contains(jamoKeyword)
-                    
-//                    return $0!.contains(keyword!)
                 }.count > 0 ? true : false
             }
         } else {

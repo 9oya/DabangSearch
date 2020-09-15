@@ -22,6 +22,7 @@ class RoomTableHeader: UITableViewHeaderFooterView {
     var priceLabel: UILabel!
     
     var underLineView: UIView!
+    var customBackView: UIView!
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -50,13 +51,12 @@ enum CollectionType {
 extension RoomTableHeader {
     private func configureContents() {
         // MARK: Setup super-view
-        backgroundColor = .systemBackground
         contentView.backgroundColor = .systemBackground
         
         // MARK: Setup sub-view properties
-        backgroundView = {
+        customBackView = {
             let view = UIView()
-            backgroundView?.backgroundColor = .clear
+            view.backgroundColor = .clear
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
@@ -116,7 +116,7 @@ extension RoomTableHeader {
         }()
         
         // MARK: Setup UI Hierarchy
-        contentView.addSubview(backgroundView!)
+        contentView.addSubview(customBackView)
         contentView.addSubview(roomTypeLabel)
         contentView.addSubview(roomCollectionView)
         contentView.addSubview(sellTypeLabel)
@@ -157,5 +157,10 @@ extension RoomTableHeader {
         underLineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
         underLineView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
         underLineView.heightAnchor.constraint(equalToConstant: 8).isActive = true
+        
+        customBackView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        customBackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        customBackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        customBackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
     }
 }

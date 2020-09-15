@@ -13,11 +13,13 @@ protocol HomeInteractorInput {
     
     func importRoomsIfNeeded()
     
-    func loadRooms(keyword: String?)
+    func loadRooms(keyword: String?, fetchStart: Int, fetchSize: Int)
     
     var numberOfRooms: (() -> Int)? { get set }
     
     var roomAt: ((_ indexPath: IndexPath) -> Room?)? { get set }
+    
+    func getAverage() -> Average
     
     func numberOfSections() -> Int
     
@@ -40,6 +42,8 @@ protocol HomeInteractorInput {
     func didSelectPriceTypeCollectionView()
     
     func configureFilterCollectionCell(cell: FilterCollectionCell, indexPath: IndexPath, getFilterAt: (_ indexPath: IndexPath) -> FilterModel)
+    
+    func getRoomTableCellHeight(indexPath: IndexPath) -> CGFloat
     
     func configureRoomTableCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }

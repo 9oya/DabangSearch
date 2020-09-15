@@ -68,6 +68,12 @@ class FilterService: FilterServiceProtocol {
         return Observable.create { (observer) in
             let roomTypes = self.getRoomTypes()
             roomTypes[indexPath.row].isSelected.toggle()
+            
+            // Prevent the filter from selecting nothing...
+            if (roomTypes.filter { $0.isSelected }).isEmpty {
+                observer.onCompleted()
+            }
+            
             self.getRoomTypes = {
                 return roomTypes
             }
@@ -81,10 +87,16 @@ class FilterService: FilterServiceProtocol {
         }
     }
     
-    func toggleSellTypeFilter(indexPath: IndexPath) -> Single<[FilterModel]> {
-        return Single.create { (single) in
+    func toggleSellTypeFilter(indexPath: IndexPath) -> Observable<[FilterModel]> {
+        return Observable.create { (observer) in
             let sellTypes = self.getSellTypes()
             sellTypes[indexPath.row].isSelected.toggle()
+            
+            // Prevent the filter from selecting nothing...
+            if (sellTypes.filter { $0.isSelected }).isEmpty {
+                observer.onCompleted()
+            }
+            
             self.getSellTypes = {
                 return sellTypes
             }
@@ -92,7 +104,8 @@ class FilterService: FilterServiceProtocol {
             self.getSellTypeFilterCodes = {
                 return sellTypeCodes
             }
-            single(.success(self.getSellTypes()))
+            observer.onNext(self.getSellTypes())
+            observer.onCompleted()
             return Disposables.create { }
         }
     }

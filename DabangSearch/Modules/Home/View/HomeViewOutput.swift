@@ -17,7 +17,7 @@ protocol HomeViewOutput {
 
     func viewIsReady()
     
-    func searchRooms(keyword: String?)
+    func searchRooms(keyword: String?, fetchStart: Int, fetchSize: Int)
     
     func numberOfRooms() -> Int
     
@@ -44,6 +44,8 @@ protocol HomeViewOutput {
     func didSelectPriceTypeCollectionView()
     
     func configureFilterCollectionCell(cell: FilterCollectionCell, indexPath: IndexPath, getFilterAt: (_ indexPath: IndexPath) -> FilterModel)
+    
+    func getRoomTableCellHeight(indexPath: IndexPath) -> CGFloat
     
     func configureRoomTableCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }

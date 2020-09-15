@@ -20,6 +20,13 @@ class HomeViewController: UIViewController, HomeViewInput {
     
     // DI
     let configurator = HomeModuleConfigurator()
+    
+    // ScrollToLoading
+    var searchText: String?
+    var lastContentOffset: CGFloat = 0.0
+    var isScrollToLoading: Bool = false
+    let fetchSize = 12
+    var fetchStart: Int = 12
 
     // MARK: Life cycle
     override func loadView() {
@@ -53,6 +60,15 @@ class HomeViewController: UIViewController, HomeViewInput {
         view.hideSpinner()
     }
     
+    func scrollToTopTableView() {
+        let indexPath = IndexPath(row: 0, section: 0)
+        roomTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+    }
+    
+    func toggleIsScrollToLoading() {
+        self.isScrollToLoading.toggle()
+    }
+    
     // MARK: Private
     private var getCollectionViewType: ((_ collectionView: UICollectionView) -> CollectionType)?
 }
@@ -60,9 +76,18 @@ class HomeViewController: UIViewController, HomeViewInput {
 extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
     // MARK: UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController) {
-        if searchController.searchBar.text?.count ?? 0 > 0 {
-            self.view.showSpinner()
-            self.output.searchRooms(keyword: searchController.searchBar.text!)
+        if searchController.searchBar.text?.isEmpty ?? true {
+            return
+        }
+        
+        fetchStart = fetchSize
+        lastContentOffset = 0.0
+        isScrollToLoading = false
+        
+        self.view.showSpinner()
+        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+            self.searchText = searchController.searchBar.text!
+            self.output.searchRooms(keyword: searchController.searchBar.text!, fetchStart: 0, fetchSize: 11)
         }
     }
     
@@ -72,7 +97,7 @@ extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
+        self.output.searchRooms(keyword: nil, fetchStart: 0, fetchSize: 11)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -96,8 +121,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.backgroundView!.addGestureRecognizer(gestureRecognizer)
-        view.backgroundView!.isUserInteractionEnabled = true
+        view.customBackView.addGestureRecognizer(gestureRecognizer)
+        view.customBackView.isUserInteractionEnabled = true
         
         view.roomCollectionView.dataSource = self
         view.roomCollectionView.delegate = self
@@ -144,12 +169,35 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 115
+        return output.getRoomTableCellHeight(indexPath: indexPath)
     }
     
     // MARK: UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         dismissKeyboard()
+        
+        if lastContentOffset > scrollView.contentOffset.y {
+            // Case scolled up
+            return
+        }
+        if scrollView.contentSize.height < 0 || scrollView.contentSize.height == 556.0 {
+            // Case view did initialized
+            return
+        } else {
+            lastContentOffset = scrollView.contentOffset.y
+        }
+        if (scrollView.frame.size.height + scrollView.contentOffset.y) > (scrollView.contentSize.height - 200) {
+            print(output.numberOfRooms())
+            print(fetchStart)
+            print(scrollView.contentSize.height)
+            if output.numberOfRooms() == fetchStart {
+                // Case searched result count is equal to fetchStart that means probably theres more...
+                isScrollToLoading = true
+                fetchStart += fetchSize
+                
+                output.searchRooms(keyword: searchText ?? nil, fetchStart: fetchStart - 1, fetchSize: fetchSize)
+            }
+        }
     }
 }
 
@@ -188,6 +236,9 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     // MARK: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        fetchStart = fetchSize
+        lastContentOffset = 0.0
+        isScrollToLoading = false
         switch getCollectionViewType!(collectionView) {
         case .roomTypeCollection:
             output.didSelectRoomTypeCollectionView(indexPath: indexPath)
@@ -200,7 +251,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         var text: String = ""
         switch getCollectionViewType!(collectionView) {
         case .roomTypeCollection:
@@ -210,7 +260,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         case .priceTypeCollection:
             text = output.getSelectedPriceTypeFilter().title
         }
-        
         return CGSize(width: CGFloat((text.count * 13) + 12), height: 32)
     }
     
@@ -251,6 +300,7 @@ extension HomeViewController {
             tableView.register(RoomTableHeader.self, forHeaderFooterViewReuseIdentifier: roomTableHeaderId)
             tableView.register(RoomRightTableCell.self, forCellReuseIdentifier: roomRightTableCellId)
             tableView.register(RoomLeftTableCell.self, forCellReuseIdentifier: roomLeftTableCellId)
+            tableView.register(AvgTableCell.self, forCellReuseIdentifier: avgTableCellId)
             tableView.translatesAutoresizingMaskIntoConstraints = false
             return tableView
         }()

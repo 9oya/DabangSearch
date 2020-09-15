@@ -6,6 +6,8 @@
 //  Copyright © 2020 Dymm. All rights reserved.
 //
 
+import UIKit
+
 protocol HomeViewInput: class {
 
     /**
@@ -22,4 +24,8 @@ protocol HomeViewInput: class {
     var reloadPriceCollectionView: (() -> Void)? { get set }
     
     func reloadRoomTableView()
+    
+    func scrollToTopTableView()
+    
+    func toggleIsScrollToLoading()
 }
