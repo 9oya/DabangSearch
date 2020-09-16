@@ -1,5 +1,5 @@
 //
-//  HomeHomeInteractor.swift
+//  HomeInteractor.swift
 //  DabangSearch
 //
 //  Created by 9oya on 11/09/2020.
@@ -88,7 +88,6 @@ class HomeInteractor: HomeInteractorInput {
                 if fetchStart == 0 {
                     self.output.scrollToTopTableView()
                 }
-                self.output.toggleIsScrollToLoading()
                 self.output.reloadRoomTableView()
             }).disposed(by: disposeBag)
     }

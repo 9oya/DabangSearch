@@ -6,6 +6,7 @@
         <attribute name="yearPrice" optional="YES" attributeType="String"/>
     </entity>
     <entity name="HashTag" representedClassName="HashTag" syncable="YES">
+        <attribute name="jamo" optional="YES" attributeType="String"/>
         <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="hashTags" inverseEntity="Room"/>
@@ -21,7 +22,7 @@
     </entity>
     <elements>
         <element name="Average" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="HashTag" positionX="-54" positionY="-9" width="128" height="88"/>
+        <element name="HashTag" positionX="-54" positionY="-9" width="128" height="103"/>
         <element name="Room" positionX="-36" positionY="9" width="128" height="148"/>
     </elements>
 </model>

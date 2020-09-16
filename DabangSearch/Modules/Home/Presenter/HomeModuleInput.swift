@@ -1,5 +1,5 @@
 //
-//  HomeHomeModuleInput.swift
+//  HomeModuleInput.swift
 //  DabangSearch
 //
 //  Created by 9oya on 11/09/2020.

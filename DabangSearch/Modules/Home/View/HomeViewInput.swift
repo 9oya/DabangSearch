@@ -1,5 +1,5 @@
 //
-//  HomeHomeViewInput.swift
+//  HomeViewInput.swift
 //  DabangSearch
 //
 //  Created by 9oya on 11/09/2020.
@@ -26,6 +26,4 @@ protocol HomeViewInput: class {
     func reloadRoomTableView()
     
     func scrollToTopTableView()
-    
-    func toggleIsScrollToLoading()
 }

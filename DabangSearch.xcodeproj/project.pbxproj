@@ -140,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				5EB7ED8E1D516C17DD137F43 /* HomeRouterInput.swift */,
+				943432B87FABCC048DCC7797 /* HomeRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -241,11 +242,11 @@
 		F56382CD250B6214002C6F23 /* DabangSearch */ = {
 			isa = PBXGroup;
 			children = (
-				F5389282250F478B00FB5D5F /* Extensions */,
-				F5D7EEFE250F127E00D55DBF /* Constants */,
 				F56382DC250B6215002C6F23 /* Info.plist */,
 				F56382E3250B62E1002C6F23 /* AppStart */,
 				F5C9FAAE250B64460084615B /* Cells */,
+				F5D7EEFE250F127E00D55DBF /* Constants */,
+				F5389282250F478B00FB5D5F /* Extensions */,
 				F5C9FAB3250B65050084615B /* ManagedObjects */,
 				F5C9FAD3250B68260084615B /* Models */,
 				F56382E2250B62CA002C6F23 /* Modules */,
@@ -278,7 +279,6 @@
 			children = (
 				F5C9FACD250B670A0084615B /* RoomListData.txt */,
 				F56382D7250B6215002C6F23 /* Assets.xcassets */,
-				943432B87FABCC048DCC7797 /* HomeRouter.swift */,
 				F56382D9250B6215002C6F23 /* LaunchScreen.storyboard */,
 				F55ABBDF250B63B6007A3C3E /* DabangSearch.xcdatamodeld */,
 			);

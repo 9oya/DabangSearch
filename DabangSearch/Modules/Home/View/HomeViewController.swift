@@ -1,5 +1,5 @@
 //
-//  HomeHomeViewController.swift
+//  HomeViewController.swift
 //  DabangSearch
 //
 //  Created by 9oya on 11/09/2020.
@@ -23,7 +23,6 @@ class HomeViewController: UIViewController, HomeViewInput {
     // Props for scroll to load more
     var searchText: String?
     var lastContentOffset: CGFloat = 0.0
-    var isScrollToLoading: Bool = false
     let fetchSize = 12
     var fetchStart: Int = 12
 
@@ -41,6 +40,9 @@ class HomeViewController: UIViewController, HomeViewInput {
     // MARK: Actions
     @objc func dismissKeyboard() {
         searchController.searchBar.endEditing(true)
+        if searchText == nil {
+            searchController.isActive = false
+        }
     }
 
     // MARK: HomeViewInput
@@ -64,10 +66,6 @@ class HomeViewController: UIViewController, HomeViewInput {
         roomTableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
     
-    func toggleIsScrollToLoading() {
-        self.isScrollToLoading.toggle()
-    }
-    
     // MARK: Private
     private var getCollectionViewType: ((_ collectionView: UICollectionView) -> CollectionType)?
 }
@@ -77,7 +75,6 @@ extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         fetchStart = fetchSize
         lastContentOffset = 0.0
-        isScrollToLoading = false
         
         if searchController.searchBar.text?.isEmpty ?? true {
             return
@@ -95,16 +92,14 @@ extension HomeViewController: UISearchResultsUpdating, UISearchBarDelegate {
         if searchText.isEmpty {
             fetchStart = fetchSize
             lastContentOffset = 0.0
-            isScrollToLoading = false
             self.searchText = nil
-            self.output.searchRooms(keyword: nil, fetchStart: 0, fetchSize: 11)
+            output.searchRooms(keyword: nil, fetchStart: 0, fetchSize: 11)
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         fetchStart = fetchSize
         lastContentOffset = 0.0
-        isScrollToLoading = false
         searchText = nil
         
         view.showSpinner()
@@ -187,18 +182,18 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             // Case scolled up
             return
         }
+        
         if scrollView.contentSize.height < 0 || scrollView.contentSize.height == 556.0 {
             // Case view did initialized
             return
         } else {
             lastContentOffset = scrollView.contentOffset.y
         }
+        
         if (scrollView.frame.size.height + scrollView.contentOffset.y) > (scrollView.contentSize.height - 200) {
             if output.numberOfRooms() == fetchStart {
                 // Case searched result count is equal to fetchStart that means probably theres more...
-                isScrollToLoading = true
                 fetchStart += fetchSize
-                
                 output.searchRooms(keyword: searchText ?? nil, fetchStart: fetchStart - 1, fetchSize: fetchSize)
             }
         }
@@ -242,7 +237,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         fetchStart = fetchSize
         lastContentOffset = 0.0
-        isScrollToLoading = false
         switch getCollectionViewType!(collectionView) {
         case .roomTypeCollection:
             output.didSelectRoomTypeCollectionView(indexPath: indexPath)

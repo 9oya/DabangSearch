@@ -2,7 +2,7 @@
 //  HashTag+CoreDataProperties.swift
 //  
 //
-//  Created by Eido Goya on 2020/09/11.
+//  Created by Eido Goya on 2020/09/16.
 //
 //
 
@@ -18,6 +18,7 @@ extension HashTag {
 
     @NSManaged public var priority: Int16
     @NSManaged public var title: String?
+    @NSManaged public var jamo: String?
     @NSManaged public var room: Room?
 
 }

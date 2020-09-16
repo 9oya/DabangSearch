@@ -71,6 +71,7 @@ class FilterService: FilterServiceProtocol {
             
             // Prevent the filter from selecting nothing...
             if (roomTypes.filter { $0.isSelected }).isEmpty {
+                roomTypes[indexPath.row].isSelected.toggle()
                 observer.onCompleted()
             }
             
@@ -94,6 +95,7 @@ class FilterService: FilterServiceProtocol {
             
             // Prevent the filter from selecting nothing...
             if (sellTypes.filter { $0.isSelected }).isEmpty {
+                sellTypes[indexPath.row].isSelected.toggle()
                 observer.onCompleted()
             }
             

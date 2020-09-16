@@ -1,5 +1,5 @@
 //
-//  HomeHomePresenter.swift
+//  HomePresenter.swift
 //  DabangSearch
 //
 //  Created by 9oya on 11/09/2020.
@@ -101,9 +101,5 @@ class HomePresenter: HomeModuleInput, HomeViewOutput, HomeInteractorOutput {
     
     func scrollToTopTableView() {
         view.scrollToTopTableView()
-    }
-    
-    func toggleIsScrollToLoading() {
-        view.toggleIsScrollToLoading()
     }
 }

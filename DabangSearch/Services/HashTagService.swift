@@ -22,6 +22,7 @@ class HashTagService: HashTagServiceProtocol {
     func createHashTag(room: Room, title: String, priority: Int16) -> HashTag {
         let hashTag = HashTag(context: managedObjContext)
         hashTag.title = title
+        hashTag.jamo = Jamo.getJamo(title)
         hashTag.priority = priority
         hashTag.room = room
         

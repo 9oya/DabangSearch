@@ -66,6 +66,14 @@ class RoomService: RoomServiceProtocol {
             NSCompoundPredicate(type: .or, subpredicates: orSubpredicates)
         )
         
+        // Searching hashTags by keyword
+        if keyword != nil {
+            let jamoKeyword = Jamo.getJamo(keyword!)
+            andSubpredicates.append(
+                NSPredicate(format: "SUBQUERY(hashTags, $x, $x.jamo CONTAINS '\(jamoKeyword)').@count > 0")
+            )
+        }
+        
         // AND: roomTypes, sellingTypes
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: andSubpredicates)
         fetchRequest.predicate = andPredicate
@@ -74,23 +82,14 @@ class RoomService: RoomServiceProtocol {
         let priceSort = NSSortDescriptor(key: #keyPath(Room.price), ascending: isPriceSortAscended)
         fetchRequest.sortDescriptors = [priceSort]
         
-        // Execute
+        // Fetching
         let results: [Room]?
         do {
             results = try managedObjContext.fetch(fetchRequest)
         } catch {
             return nil
         }
-        
-        if keyword != nil {
-            let jamoKeyword = Jamo.getJamo(keyword!)
-            return results!.filter {
-                ($0.hashTags!.allObjects as! [HashTag]).map { $0.title }.filter {
-                    Jamo.getJamo($0!).contains(jamoKeyword)
-                }.count > 0 ? true : false
-            }
-        } else {
-            return results
-        }
+        return results
     }
 }
+
