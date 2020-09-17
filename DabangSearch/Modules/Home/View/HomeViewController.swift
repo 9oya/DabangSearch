@@ -192,7 +192,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         if (scrollView.frame.size.height + scrollView.contentOffset.y) > (scrollView.contentSize.height - 200) {
             if output.numberOfRooms() == fetchStart {
-                // Case searched result count is equal to fetchStart that means probably theres more...
+                // If search result count and fetchStart are the same, there are more...
                 fetchStart += fetchSize
                 output.searchRooms(keyword: searchText ?? nil, fetchStart: fetchStart - 1, fetchSize: fetchSize)
             }
